@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initOrbitImages();
   initScrollStack();
   initScrollExpand();
+  initShinyText();
 });
 
 /* ==========================================================================
@@ -50,15 +51,19 @@ function init3DWorld() {
   // 1. Scene & Perspective Camera
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 100);
-  camera.position.set(0, 0.2, 4.2);
+  camera.position.set(0, 0.15, 3.9);
+  window.scene = scene;
+  window.camera = camera;
 
   // 2. High-Performance WebGL Renderer
   renderer = new THREE.WebGLRenderer({
     canvas: canvas,
     alpha: true,
     antialias: true,
-    powerPreference: 'high-performance'
+    powerPreference: 'high-performance',
+    preserveDrawingBuffer: true
   });
+  window.renderer = renderer;
   renderer.setSize(width, height);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -74,23 +79,22 @@ function init3DWorld() {
     controls.enableZoom = true;
     controls.minDistance = 2.2;
     controls.maxDistance = 6.5;
-    controls.autoRotate = true;
-    controls.autoRotateSpeed = 1.2;
+    controls.autoRotate = false; // Keep phone in front showcase angle so it never looks flat!
+    controls.autoRotateSpeed = 0;
     controls.maxPolarAngle = Math.PI - 0.2;
     controls.minPolarAngle = 0.2;
 
     controls.addEventListener('start', () => {
       isUserInteracting = true;
-      controls.autoRotate = false;
     });
 
     controls.addEventListener('end', () => {
       clearTimeout(idleTimer);
       idleTimer = setTimeout(() => {
         isUserInteracting = false;
-        controls.autoRotate = true;
       }, 3500);
     });
+    window.controls = controls;
   }
 
   // 4. Dramatic Luxury Black & Gold Studio Lighting
@@ -142,9 +146,15 @@ function init3DWorld() {
       controls.update();
     }
 
-    // Subtle breathing float when not dragging
+    // Subtle breathing float & micro-tilt while keeping device in showcase angle
     if (currentLoadedMesh && !isUserInteracting) {
-      currentLoadedMesh.position.y = Math.sin(elapsedTime * 1.5) * 0.05;
+      currentLoadedMesh.position.y = (window.targetPosY !== undefined ? window.targetPosY : 0) + Math.sin(elapsedTime * 1.5) * 0.03;
+      const baseRotY = window.targetRotY !== undefined ? window.targetRotY : -0.32;
+      const baseRotX = window.targetRotX !== undefined ? window.targetRotX : 0.10;
+      const baseRotZ = window.targetRotZ !== undefined ? window.targetRotZ : 0.04;
+      currentLoadedMesh.rotation.y = baseRotY + Math.sin(elapsedTime * 0.8) * 0.03;
+      currentLoadedMesh.rotation.x = baseRotX + Math.cos(elapsedTime * 0.8) * 0.02;
+      currentLoadedMesh.rotation.z = baseRotZ;
     }
 
     renderer.render(scene, camera);
@@ -153,10 +163,183 @@ function init3DWorld() {
 }
 
 /**
- * Procedural Realistic Smartphone
- * Instant visible 3D mesh while network loads GLB
+ * Photorealistic Smartphone Screen Canvas Texture
+ * Renders the exact iOS 13/14 curved fiery gradient wallpaper, notch, status bar,
+ * 20 colorful apps, and frosted dock matching user's showcase photo
+ */
+function createSmartphoneScreenTexture() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 512;
+  canvas.height = 1024;
+  const ctx = canvas.getContext('2d');
+
+  // Wallpaper: Rich red, fiery orange & burgundy curved gradient
+  const grad = ctx.createLinearGradient(0, 0, 512, 1024);
+  grad.addColorStop(0, '#0a0a0c');
+  grad.addColorStop(0.12, '#3a1005');
+  grad.addColorStop(0.35, '#c53808');
+  grad.addColorStop(0.55, '#f45d16');
+  grad.addColorStop(0.75, '#e0302b');
+  grad.addColorStop(0.9, '#a21d46');
+  grad.addColorStop(1.0, '#3b0b2e');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, 512, 1024);
+
+  // Dynamic light swirl swooshes matching iOS wallpaper
+  ctx.save();
+  ctx.beginPath();
+  ctx.ellipse(256, 750, 320, 220, -0.4, 0, Math.PI * 2);
+  const glow1 = ctx.createRadialGradient(256, 750, 20, 256, 750, 320);
+  glow1.addColorStop(0, 'rgba(255, 230, 180, 0.45)');
+  glow1.addColorStop(0.5, 'rgba(255, 75, 43, 0.3)');
+  glow1.addColorStop(1, 'transparent');
+  ctx.fillStyle = glow1;
+  ctx.fill();
+  ctx.restore();
+
+  // Helper for smooth rounded rectangles
+  function roundRect(c, x, y, w, h, r) {
+    c.beginPath();
+    c.moveTo(x + r, y);
+    c.lineTo(x + w - r, y);
+    c.quadraticCurveTo(x + w, y, x + w, y + r);
+    c.lineTo(x + w, y + h - r);
+    c.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    c.lineTo(x + r, y + h);
+    c.quadraticCurveTo(x, y + h, x, y + h - r);
+    c.lineTo(x, y + r);
+    c.quadraticCurveTo(x, y, x + r, y);
+    c.closePath();
+  }
+
+  // Top Status Bar (10:00 time, wifi & 100% battery)
+  ctx.fillStyle = '#ffffff';
+  ctx.font = 'bold 22px -apple-system, BlinkMacSystemFont, sans-serif';
+  ctx.textAlign = 'left';
+  ctx.fillText('10:00', 38, 46);
+  ctx.textAlign = 'right';
+  ctx.fillText('5G  100% 🔋', 476, 46);
+
+  // Top Speaker & TrueDepth Notch
+  ctx.fillStyle = '#000000';
+  roundRect(ctx, 166, 0, 180, 34, 16);
+  ctx.fill();
+
+  // Grid of 4 x 5 iOS App Icons
+  const appRows = [
+    [
+      { bg: '#34c759', icon: '📹', name: 'FaceTime' },
+      { bg: '#ffffff', icon: '📅', name: 'Calendar' },
+      { bg: '#ffffff', icon: '🌸', name: 'Photos' },
+      { bg: '#5856d6', icon: '📷', name: 'Camera' }
+    ],
+    [
+      { bg: '#007aff', icon: '✉️', name: 'Mail' },
+      { bg: '#1c1c1e', icon: '⏰', name: 'Clock' },
+      { bg: '#ff9500', icon: '🗺️', name: 'Maps' },
+      { bg: '#5ac8fa', icon: '☀️', name: 'Weather' }
+    ],
+    [
+      { bg: '#ffffff', icon: '📝', name: 'Reminders' },
+      { bg: '#ffd60a', icon: '📋', name: 'Notes' },
+      { bg: '#1c1c1e', icon: '📈', name: 'Stocks' },
+      { bg: '#ff375f', icon: '📚', name: 'Books' }
+    ],
+    [
+      { bg: '#007aff', icon: '🅰️', name: 'App Store' },
+      { bg: '#af52de', icon: '🎙️', name: 'Podcasts' },
+      { bg: '#000000', icon: '📺', name: 'TV' },
+      { bg: '#ffffff', icon: '❤️', name: 'Health' }
+    ],
+    [
+      { bg: '#ff9500', icon: '🏠', name: 'Home' },
+      { bg: '#1c1c1e', icon: '💳', name: 'Wallet' },
+      { bg: '#8e8e93', icon: '⚙️', name: 'Settings' },
+      { bg: '#d4af37', icon: '⚡', name: 'Harshu' }
+    ]
+  ];
+
+  const startX = 36;
+  const startY = 100;
+  const colGap = 118;
+  const rowGap = 120;
+  const iconSize = 74;
+
+  appRows.forEach((row, r) => {
+    row.forEach((app, c) => {
+      const x = startX + c * colGap;
+      const y = startY + r * rowGap;
+
+      // App Icon Squircle
+      ctx.fillStyle = app.bg;
+      roundRect(ctx, x, y, iconSize, iconSize, 18);
+      ctx.fill();
+
+      // App Emoji/Icon Symbol
+      ctx.font = '34px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(app.icon, x + iconSize / 2, y + iconSize / 2 + 2);
+
+      // App Label
+      ctx.font = '13px -apple-system, BlinkMacSystemFont, sans-serif';
+      ctx.fillStyle = '#ffffff';
+      ctx.textAlign = 'center';
+      ctx.fillText(app.name, x + iconSize / 2, y + iconSize + 18);
+    });
+  });
+
+  // Pagination Dots
+  [236, 246, 256, 266, 276].forEach((dotX, i) => {
+    ctx.beginPath();
+    ctx.arc(dotX, 810, i === 2 ? 3.5 : 2.5, 0, Math.PI * 2);
+    ctx.fillStyle = i === 2 ? '#ffffff' : 'rgba(255, 255, 255, 0.45)';
+    ctx.fill();
+  });
+
+  // Glass Frosted Dock at Bottom
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.18)';
+  roundRect(ctx, 24, 850, 464, 115, 34);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+
+  const dockApps = [
+    { bg: '#34c759', icon: '📞' },
+    { bg: '#007aff', icon: '🧭' },
+    { bg: '#30d158', icon: '💬' },
+    { bg: '#fc3d39', icon: '🎵' }
+  ];
+
+  dockApps.forEach((app, i) => {
+    const x = 44 + i * 115;
+    const y = 868;
+    ctx.fillStyle = app.bg;
+    roundRect(ctx, x, y, 78, 78, 20);
+    ctx.fill();
+    ctx.font = '38px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(app.icon, x + 39, y + 41);
+  });
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.anisotropy = 8;
+  return texture;
+}
+
+/**
+ * Procedural Photorealistic iPhone 16 Pro Showcase Model
+ * Guarantees phone is ALWAYS visible from millisecond 0 in the exact tilt angle
+ * and never shown flat or edge-on
  */
 function createProceduralSmartphone() {
+  if (currentLoadedMesh) scene.remove(currentLoadedMesh);
+  if (proceduralFallbackMesh && currentLoadedMesh !== proceduralFallbackMesh) {
+    scene.remove(proceduralFallbackMesh);
+  }
+
   const group = new THREE.Group();
 
   // 1. Sleek Titanium Outer Chassis
@@ -170,27 +353,20 @@ function createProceduralSmartphone() {
   const bodyMesh = new THREE.Mesh(bodyGeo, bodyMat);
   group.add(bodyMesh);
 
-  // 2. Pure Black OLED Glass Screen
+  // 2. High-Res OLED Screen with Exact Wallpaper & iOS App Grid
   const screenGeo = new THREE.PlaneGeometry(1.14, 2.38);
   const screenMat = new THREE.MeshStandardMaterial({
-    color: 0x050505,
+    map: createSmartphoneScreenTexture(),
     roughness: 0.1,
-    metalness: 0.95,
-    emissive: 0x111111,
-    emissiveIntensity: 0.3
+    metalness: 0.85,
+    emissive: 0x222222,
+    emissiveIntensity: 0.35
   });
   const screenMesh = new THREE.Mesh(screenGeo, screenMat);
   screenMesh.position.z = 0.062;
   group.add(screenMesh);
 
-  // 3. Dynamic Island Pill
-  const pillGeo = new THREE.PlaneGeometry(0.24, 0.055);
-  const pillMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
-  const pillMesh = new THREE.Mesh(pillGeo, pillMat);
-  pillMesh.position.set(0, 1.05, 0.063);
-  group.add(pillMesh);
-
-  // 4. Luxury Gold Chamfer Rim Frame
+  // 3. Luxury Gold Chamfer Rim Frame
   const rimGeo = new THREE.BoxGeometry(1.22, 2.47, 0.02);
   const rimMat = new THREE.MeshStandardMaterial({
     color: 0xd4af37,
@@ -200,7 +376,7 @@ function createProceduralSmartphone() {
   const rimMesh = new THREE.Mesh(rimGeo, rimMat);
   group.add(rimMesh);
 
-  // 5. Triple Camera Island on Back
+  // 4. Triple Camera Island on Back
   const bumpGeo = new THREE.BoxGeometry(0.52, 0.52, 0.05);
   const bumpMat = new THREE.MeshStandardMaterial({
     color: 0x181a1f,
@@ -230,9 +406,11 @@ function createProceduralSmartphone() {
     group.add(lensMesh);
   });
 
-  group.rotation.set(0.12, -0.38, 0);
+  // Showcase Angle matching user's reference photo
+  group.rotation.set(0.10, -0.32, 0.04);
   proceduralFallbackMesh = group;
   currentLoadedMesh = group;
+  window.currentLoadedMesh = group;
   scene.add(group);
 }
 
@@ -267,13 +445,19 @@ function loadModel(type) {
 
   // Update switcher button states
   document.querySelectorAll('.switcher-btn').forEach(btn => btn.classList.remove('active'));
-  const btnId = (type === 'phone') ? 'btn-phone' : (type === 'macbook') ? 'btn-macbook' : 'btn-rig';
+  const btnId = (type === 'phone') ? 'btn-phone' : (type === 'macbook') ? 'btn-macbook' : 'btn-tablet';
   const activeBtn = document.getElementById(btnId);
   if (activeBtn) activeBtn.classList.add('active');
 
-  // If gaming rig is selected, build the liquid-cooled PC rig scene
-  if (type === 'rig') {
-    createLiquidGamingRig();
+  // If phone is selected, build the luxury photorealistic smartphone showcase
+  if (type === 'phone') {
+    createProceduralSmartphone();
+    return;
+  }
+
+  // If tablet is selected, build the luxury Apple iPad tablet scene
+  if (type === 'tablet') {
+    createProceduralTablet();
     return;
   }
 
@@ -314,9 +498,10 @@ function loadModel(type) {
 
       const pivotGroup = new THREE.Group();
       pivotGroup.add(model);
-      pivotGroup.rotation.set(0.12, -0.4, 0);
+      pivotGroup.rotation.set(0.10, -0.32, 0.04);
 
       currentLoadedMesh = pivotGroup;
+      window.currentLoadedMesh = pivotGroup;
 
       // Enhance materials for metallic luxury reflections
       model.traverse((child) => {
@@ -345,67 +530,247 @@ function loadModel(type) {
   );
 }
 
+function createTabletScreenTexture() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 1024;
+  canvas.height = 1400;
+  const ctx = canvas.getContext('2d');
+
+  // Luxurious Dark Gold & Obsidian Wallpaper Gradient
+  const grad = ctx.createLinearGradient(0, 0, 1024, 1400);
+  grad.addColorStop(0, '#0a0a0f');
+  grad.addColorStop(0.35, '#12141c');
+  grad.addColorStop(0.65, '#231d10');
+  grad.addColorStop(0.85, '#d4af37');
+  grad.addColorStop(1, '#050505');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, 1024, 1400);
+
+  // Soft glowing orb in wallpaper
+  const orb = ctx.createRadialGradient(680, 850, 40, 680, 850, 450);
+  orb.addColorStop(0, 'rgba(212, 175, 55, 0.45)');
+  orb.addColorStop(0.5, 'rgba(212, 175, 55, 0.12)');
+  orb.addColorStop(1, 'rgba(0, 0, 0, 0)');
+  ctx.fillStyle = orb;
+  ctx.fillRect(0, 0, 1024, 1400);
+
+  function roundRect(c, x, y, w, h, r) {
+    c.beginPath();
+    c.moveTo(x + r, y);
+    c.lineTo(x + w - r, y);
+    c.quadraticCurveTo(x + w, y, x + w, y + r);
+    c.lineTo(x + w, y + h - r);
+    c.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    c.lineTo(x + r, y + h);
+    c.quadraticCurveTo(x, y + h, x, y + h - r);
+    c.lineTo(x, y + r);
+    c.quadraticCurveTo(x, y, x + r, y);
+    c.closePath();
+  }
+
+  // Top Status Bar
+  ctx.fillStyle = '#ffffff';
+  ctx.font = 'bold 32px sans-serif';
+  ctx.fillText('9:41', 60, 65);
+  ctx.textAlign = 'right';
+  ctx.fillText('100% 🔋', 960, 65);
+
+  // iPad Top Widget Left
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+  roundRect(ctx, 60, 120, 420, 200, 28);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(212, 175, 55, 0.35)';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#d4af37';
+  ctx.font = 'bold 26px sans-serif';
+  ctx.fillText('⚡ HARSHU COMPUTERS', 90, 170);
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '22px sans-serif';
+  ctx.fillText('Liquid Retina XDR Display', 90, 215);
+  ctx.fillStyle = '#9ca3af';
+  ctx.font = '19px sans-serif';
+  ctx.fillText('M2 Chip • Apple Pencil Support', 90, 255);
+
+  // iPad Top Widget Right
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+  roundRect(ctx, 540, 120, 420, 200, 28);
+  ctx.fill();
+  ctx.stroke();
+  ctx.fillStyle = '#f3f4f6';
+  ctx.font = 'bold 24px sans-serif';
+  ctx.fillText('Yeola Store • Open Today', 570, 170);
+  ctx.fillStyle = '#d4af37';
+  ctx.font = 'bold 36px sans-serif';
+  ctx.fillText('9:00 AM - 9:00 PM', 570, 225);
+  ctx.fillStyle = '#9ca3af';
+  ctx.font = '19px sans-serif';
+  ctx.fillText('Near Samarth Mobile', 570, 265);
+
+  // 12 iPad App Icons Grid
+  const appColors = [
+    '#34c759', '#007aff', '#ff9500', '#af52de',
+    '#ff2d55', '#5856d6', '#5ac8fa', '#ffcc00',
+    '#d4af37', '#30b0c7', '#32d74b', '#ff3b30'
+  ];
+  const appIcons = [
+    '📞', '🧭', '📷', '🎵',
+    '✉️', '📁', '⚙️', '📝',
+    '⭐', '📍', '🛍️', '💡'
+  ];
+
+  for (let r = 0; r < 3; r++) {
+    for (let c = 0; c < 4; c++) {
+      const idx = r * 4 + c;
+      const x = 90 + c * 225;
+      const y = 380 + r * 210;
+      ctx.fillStyle = appColors[idx % appColors.length];
+      roundRect(ctx, x, y, 120, 120, 28);
+      ctx.fill();
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '42px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(appIcons[idx], x + 60, y + 74);
+    }
+  }
+
+  // Floating iPad Bottom Dock
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.14)';
+  roundRect(ctx, 160, 1210, 704, 130, 36);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(212, 175, 55, 0.4)';
+  ctx.stroke();
+
+  const dockIcons = ['📱', '💬', '🌐', '💻', '⭐'];
+  dockIcons.forEach((icon, i) => {
+    const x = 220 + i * 125;
+    ctx.fillStyle = 'rgba(0,0,0,0.3)';
+    roundRect(ctx, x, 1230, 90, 90, 22);
+    ctx.fill();
+    ctx.fillStyle = '#ffffff';
+    ctx.font = '44px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(icon, x + 45, 1290);
+  });
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.anisotropy = 8;
+  return texture;
+}
+
 /**
- * 3D Apex Liquid Gaming PC Model (Procedural High-Tech Hardware)
+ * 3D Photorealistic Apple iPad Pro / Tablet Model
  */
-function createLiquidGamingRig() {
+function createProceduralTablet() {
   if (currentLoadedMesh) scene.remove(currentLoadedMesh);
 
   const group = new THREE.Group();
 
-  // Glass & Titanium PC Case
-  const caseGeo = new THREE.BoxGeometry(1.6, 2.2, 1.8);
-  const caseMat = new THREE.MeshPhysicalMaterial({
-    color: 0x111111,
-    transmission: 0.65,
-    opacity: 0.9,
-    transparent: true,
-    roughness: 0.1,
-    metalness: 0.8
+  // 1. Space Gray / Midnight Aluminum Chassis
+  const bodyGeo = new THREE.BoxGeometry(2.2, 3.0, 0.09, 12, 12, 4);
+  const bodyMat = new THREE.MeshStandardMaterial({
+    color: 0x1b1e24,
+    metalness: 0.92,
+    roughness: 0.22,
+    envMapIntensity: 1.5
   });
-  const caseMesh = new THREE.Mesh(caseGeo, caseMat);
-  group.add(caseMesh);
+  const bodyMesh = new THREE.Mesh(bodyGeo, bodyMat);
+  group.add(bodyMesh);
 
-  // Chassis Metal Frame
-  const frameGeo = new THREE.BoxGeometry(1.64, 2.24, 1.84);
-  const frameMat = new THREE.MeshStandardMaterial({
+  // 2. Liquid Retina XDR Edge-to-Edge Screen
+  const screenGeo = new THREE.PlaneGeometry(2.08, 2.88);
+  const screenMat = new THREE.MeshStandardMaterial({
+    map: createTabletScreenTexture(),
+    roughness: 0.12,
+    metalness: 0.82,
+    emissive: 0x222222,
+    emissiveIntensity: 0.35
+  });
+  const screenMesh = new THREE.Mesh(screenGeo, screenMat);
+  screenMesh.position.z = 0.046;
+  group.add(screenMesh);
+
+  // 3. Gold Chamfer Rim Frame
+  const rimGeo = new THREE.BoxGeometry(2.22, 3.02, 0.012);
+  const rimMat = new THREE.MeshStandardMaterial({
     color: 0xd4af37,
-    wireframe: true,
-    metalness: 0.95
+    metalness: 0.98,
+    roughness: 0.14
   });
-  const frameMesh = new THREE.Mesh(frameGeo, frameMat);
-  group.add(frameMesh);
+  const rimMesh = new THREE.Mesh(rimGeo, rimMat);
+  group.add(rimMesh);
 
-  // Giant GPU (RTX 4090) with Gold Trim
-  const gpuGeo = new THREE.BoxGeometry(1.2, 0.35, 0.8);
-  const gpuMat = new THREE.MeshStandardMaterial({
-    color: 0x181818,
+  // 4. Front TrueDepth Camera Sensor
+  const frontCamGeo = new THREE.CircleGeometry(0.022, 16);
+  const frontCamMat = new THREE.MeshBasicMaterial({ color: 0x050505 });
+  const frontCamMesh = new THREE.Mesh(frontCamGeo, frontCamMat);
+  frontCamMesh.position.set(0, 1.47, 0.047);
+  group.add(frontCamMesh);
+
+  // 5. Back Dual Camera Module with LiDAR Scanner on Back
+  const bumpGeo = new THREE.BoxGeometry(0.55, 0.55, 0.04);
+  const bumpMat = new THREE.MeshStandardMaterial({
+    color: 0x14161b,
     metalness: 0.9,
     roughness: 0.2
   });
-  const gpuMesh = new THREE.Mesh(gpuGeo, gpuMat);
-  gpuMesh.position.set(0, -0.2, 0.1);
-  group.add(gpuMesh);
+  const bumpMesh = new THREE.Mesh(bumpGeo, bumpMat);
+  bumpMesh.position.set(-0.72, 1.12, -0.06);
+  group.add(bumpMesh);
 
-  // Glowing Liquid Cooling Tubes
-  const curve = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(-0.4, 0.6, 0),
-    new THREE.Vector3(-0.2, 0.2, 0.3),
-    new THREE.Vector3(0.3, 0.0, 0.2),
-    new THREE.Vector3(0.5, -0.6, 0)
-  ]);
-  const tubeGeo = new THREE.TubeGeometry(curve, 32, 0.045, 12, false);
-  const tubeMat = new THREE.MeshStandardMaterial({
-    color: 0xd4af37,
-    emissive: 0xd4af37,
-    emissiveIntensity: 0.6,
-    roughness: 0.2
+  // Camera Lenses
+  const lenses = [
+    [-0.82, 1.22, -0.082],
+    [-0.82, 1.02, -0.082]
+  ];
+  lenses.forEach(pos => {
+    const lensGeo = new THREE.CylinderGeometry(0.075, 0.075, 0.025, 24);
+    lensGeo.rotateX(Math.PI / 2);
+    const ringMat = new THREE.MeshStandardMaterial({
+      color: 0xd4af37,
+      metalness: 0.98,
+      roughness: 0.1
+    });
+    const lensMesh = new THREE.Mesh(lensGeo, ringMat);
+    lensMesh.position.set(pos[0], pos[1], pos[2]);
+    group.add(lensMesh);
   });
-  const tubeMesh = new THREE.Mesh(tubeGeo, tubeMat);
-  group.add(tubeMesh);
 
-  group.rotation.set(0.18, -0.5, 0);
+  // LiDAR Sensor
+  const lidarGeo = new THREE.CylinderGeometry(0.045, 0.045, 0.02, 16);
+  lidarGeo.rotateX(Math.PI / 2);
+  const lidarMat = new THREE.MeshBasicMaterial({ color: 0x080808 });
+  const lidarMesh = new THREE.Mesh(lidarGeo, lidarMat);
+  lidarMesh.position.set(-0.62, 1.05, -0.08);
+  group.add(lidarMesh);
+
+  // 6. Magnetic Apple Pencil Attached to Edge
+  const pencilGeo = new THREE.CylinderGeometry(0.038, 0.038, 2.4, 20);
+  const pencilMat = new THREE.MeshStandardMaterial({
+    color: 0xfafafa,
+    metalness: 0.15,
+    roughness: 0.3
+  });
+  const pencilMesh = new THREE.Mesh(pencilGeo, pencilMat);
+  pencilMesh.position.set(1.15, 0, 0);
+  group.add(pencilMesh);
+
+  // Gold Tip & Wireless Charging Band
+  const bandGeo = new THREE.CylinderGeometry(0.04, 0.04, 0.08, 20);
+  const bandMat = new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: 0.98, roughness: 0.1 });
+  const bandMesh = new THREE.Mesh(bandGeo, bandMat);
+  bandMesh.position.set(1.15, 0.9, 0);
+  group.add(bandMesh);
+
+  // Scale and Angle matching front showcase
+  const desiredScale = 0.85;
+  group.scale.set(desiredScale, desiredScale, desiredScale);
+  group.rotation.set(0.10, -0.32, 0.04);
+
   currentLoadedMesh = group;
+  window.currentLoadedMesh = group;
   scene.add(group);
 }
 
@@ -414,11 +779,11 @@ function createLiquidGamingRig() {
  */
 function reset3DCamera() {
   if (!camera || !controls) return;
-  camera.position.set(0, 0.2, 4.2);
+  camera.position.set(0, 0.15, 3.9);
   controls.target.set(0, 0, 0);
   controls.update();
   if (currentLoadedMesh) {
-    currentLoadedMesh.rotation.set(0.12, -0.38, 0);
+    currentLoadedMesh.rotation.set(0.10, -0.32, 0.04);
   }
 }
 
@@ -478,7 +843,7 @@ const TRANSLATIONS = {
     metric_speed_lbl: 'Fast Repair & Upgrades',
     switcher_phone: '📱 Mobile',
     switcher_laptop: '💻 Laptop',
-    switcher_pc: '⚡ Desktop PC',
+    switcher_tablet: '📟 Tablet',
     switcher_reset: '↺ Reset',
     vel_1: 'HARSHU COMPUTERS YEOLA',
     vel_2: 'BEST MOBILES & LAPTOPS',
@@ -660,7 +1025,7 @@ const TRANSLATIONS = {
     metric_speed_lbl: 'फास्ट रिपेअरिंग सर्व्हिस',
     switcher_phone: '📱 मोबाईल',
     switcher_laptop: '💻 लॅपटॉप',
-    switcher_pc: '⚡ कॉम्प्युटर',
+    switcher_tablet: '📟 टॅब्लेट',
     switcher_reset: '↺ मूळ स्थिती',
     vel_1: 'हर्षू कॉम्प्युटर्स येवला',
     vel_2: 'उत्तम मोबाईल व लॅपटॉप्स',
@@ -841,7 +1206,7 @@ const TRANSLATIONS = {
     metric_speed_lbl: 'तेज़ रिपेयर और अपग्रेड',
     switcher_phone: '📱 मोबाइल',
     switcher_laptop: '💻 लैपटॉप',
-    switcher_pc: '⚡ कंप्यूटर',
+    switcher_tablet: '📟 टैबलेट',
     switcher_reset: '↺ रीसेट',
     vel_1: 'हर्षू कंप्यूटर्स येवला',
     vel_2: 'बेस्ट मोबाइल और लैपटॉप्स',
@@ -1061,6 +1426,11 @@ function setLanguage(lang, isManual = false) {
 
   // 4. Update Rotating Text with active language list
   updateRotatingTextLanguage();
+
+  // Update ShinyText elements when text content changes
+  if (typeof updateShinyText === 'function') {
+    updateShinyText();
+  }
 
   // 5. Update Orbit Component tooltips
   if (typeof updateOrbitTooltips === 'function') {
@@ -2640,3 +3010,345 @@ void main() {
   resize();
 }
 
+
+
+/* ==========================================================================
+   REACT BITS: SHINY TEXT COMPONENT (DYNAMIC LUXURY LIGHT SWEEP)
+   ========================================================================== */
+const SHINY_EASINGS = {
+  linear: t => t,
+  smooth: t => 0.5 - Math.cos(Math.PI * t) / 2,
+  snappy: t => (t < 0.5 ? 16 * Math.pow(t, 5) : 1 - Math.pow(-2 * t + 2, 5) / 2)
+};
+const SHINY_FALLOFF = [0, 0.2, 0.4, 0.6, 0.8, 1];
+let shinyPaint = null;
+
+function shinyParseColor(value) {
+  if (typeof document === 'undefined') return null;
+  if (!shinyPaint) shinyPaint = document.createElement('canvas').getContext('2d');
+  if (!shinyPaint) return null;
+  shinyPaint.fillStyle = '#000000';
+  shinyPaint.fillStyle = value;
+  const resolved = String(shinyPaint.fillStyle);
+  if (resolved.startsWith('#')) {
+    return [1, 3, 5].map(i => parseInt(resolved.slice(i, i + 2), 16)).concat(1);
+  }
+  const parts = resolved.match(/[\d.]+/g);
+  if (!parts || parts.length < 3) return null;
+  return [Number(parts[0]), Number(parts[1]), Number(parts[2]), parts.length > 3 ? Number(parts[3]) : 1];
+}
+
+function shinyBlend(from, to, amount) {
+  const channel = (a, b) =>
+    Math.round(Math.pow(Math.pow(a / 255, 2.2) * (1 - amount) + Math.pow(b / 255, 2.2) * amount, 1 / 2.2) * 255);
+  const alpha = from[3] * (1 - amount) + to[3] * amount;
+  if (alpha <= 0) return 'rgba(0, 0, 0, 0)';
+  const weigh = (a, b) => (a * from[3] * (1 - amount) + b * to[3] * amount) / alpha;
+  const r = from[3] === to[3] ? channel(from[0], to[0]) : Math.round(weigh(from[0], to[0]));
+  const g = from[3] === to[3] ? channel(from[1], to[1]) : Math.round(weigh(from[1], to[1]));
+  const b = from[3] === to[3] ? channel(from[2], to[2]) : Math.round(weigh(from[2], to[2]));
+  return `rgba(${r}, ${g}, ${b}, ${Math.round(alpha * 1000) / 1000})`;
+}
+
+const shinyInstances = [];
+
+function initShinyText() {
+  const elements = document.querySelectorAll('.shiny-text');
+  if (!elements.length) return;
+
+  elements.forEach(el => {
+    setupShinyTextInstance(el);
+  });
+}
+
+function setupShinyTextInstance(root) {
+  const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+
+  const color = root.dataset.shinyColor || '#ffffff';
+  const shineColor = root.dataset.shinyShine || '#ffd700';
+  const speed = Math.max(0.1, parseFloat(root.dataset.shinySpeed) || 2.5);
+  const delay = Math.max(0, parseFloat(root.dataset.shinyDelay) || 0);
+  const angle = parseFloat(root.dataset.shinyAngle) || 120;
+  const shineWidth = Math.min(200, Math.max(2, parseFloat(root.dataset.shinyWidth) || 40));
+  const softness = Math.min(1, Math.max(0, parseFloat(root.dataset.shinySoftness) || 0.8));
+  const bands = Math.min(3, Math.max(1, parseInt(root.dataset.shinyBands) || 1));
+  const glow = Math.min(1, Math.max(0, parseFloat(root.dataset.shinyGlow) || 0.35));
+  const direction = root.dataset.shinyDirection || 'left';
+  const easing = root.dataset.shinyEasing || 'smooth';
+  const trigger = root.dataset.shinyTrigger || 'loop';
+  const yoyo = root.dataset.shinyYoyo === 'true';
+  const followPointer = root.dataset.shinyFollow !== 'false';
+  const pauseOnHover = root.dataset.shinyPause === 'true';
+
+  const s = {
+    color,
+    shineColor,
+    speed,
+    delay,
+    angle,
+    shineWidth,
+    softness,
+    bands,
+    glow,
+    sign: direction === 'right' ? 1 : -1,
+    ease: SHINY_EASINGS[easing] ?? SHINY_EASINGS.smooth,
+    trigger,
+    yoyo,
+    followPointer,
+    pauseOnHover,
+    disabled: false
+  };
+
+  // Create or attach glow child if glow > 0
+  let glowRef = root.querySelector('.shiny-text__glow');
+  if (!glowRef && s.glow > 0) {
+    glowRef = document.createElement('span');
+    glowRef.className = 'shiny-text__glow';
+    glowRef.setAttribute('aria-hidden', 'true');
+    glowRef.textContent = root.textContent;
+    root.appendChild(glowRef);
+  }
+
+  const state = {
+    pos: null,
+    vel: 0,
+    phase: 'idle',
+    from: 0,
+    to: 0,
+    start: 0,
+    duration: 1,
+    resume: 0,
+    flip: false,
+    inside: false,
+    target: 0,
+    visible: true,
+    seen: false,
+    colors: ''
+  };
+
+  let base = null;
+  let shine = null;
+  let clear = null;
+  let raf = 0;
+  let timer = 0;
+  let last = 0;
+  let alive = true;
+
+  const extent = () => s.shineWidth / 2 + (s.bands - 1) * s.shineWidth * 1.3 + 2;
+  const entry = () => (s.sign > 0 ? -extent() : 100 + extent());
+  const exit = () => (s.sign > 0 ? 100 + extent() : -extent());
+  const nearest = () => (state.target < 50 ? -extent() : 100 + extent());
+
+  const gradient = (pos, fill) => {
+    const half = s.shineWidth / 2;
+    const core = half * (1 - s.softness);
+    const fade = half - core;
+    const stops = [];
+    for (let band = 0; band < s.bands; band++) {
+      const center = pos - s.sign * band * s.shineWidth * 1.3;
+      const strength = 1 - band * 0.28;
+      for (const side of [-1, 1]) {
+        for (const f of SHINY_FALLOFF) {
+          const at = center + side * (core + fade * (1 - f));
+          const amount = f * f * (3 - 2 * f) * strength;
+          stops.push([at, amount]);
+        }
+      }
+    }
+    stops.sort((a, b) => a[0] - b[0]);
+    const list = stops.map(([at, amount]) => `${shinyBlend(fill, shine, amount)} ${at.toFixed(2)}%`);
+    return `linear-gradient(${s.angle}deg, ${shinyBlend(fill, shine, 0)} 0%, ${list.join(', ')}, ${shinyBlend(fill, shine, 0)} 100%)`;
+  };
+
+  const draw = () => {
+    const key = `${s.color}|${s.shineColor}`;
+    if (key !== state.colors) {
+      state.colors = key;
+      base = shinyParseColor(s.color);
+      shine = shinyParseColor(s.shineColor);
+      clear = shine ? [shine[0], shine[1], shine[2], 0] : null;
+    }
+    if (!base || !shine) {
+      root.style.backgroundImage = `linear-gradient(${s.color}, ${s.color})`;
+      return;
+    }
+    if (state.pos === null || s.disabled) {
+      root.style.backgroundImage = `linear-gradient(${s.color}, ${s.color})`;
+      if (glowRef) glowRef.style.backgroundImage = 'none';
+      return;
+    }
+    root.style.backgroundImage = gradient(state.pos, base);
+    if (glowRef) {
+      glowRef.style.backgroundImage = gradient(state.pos, clear);
+      glowRef.style.opacity = String(s.glow);
+    }
+  };
+
+  const sweep = (from, to, now) => {
+    const span = Math.abs(exit() - entry()) || 1;
+    state.phase = 'sweep';
+    state.from = from;
+    state.to = to;
+    state.start = now;
+    state.duration = s.speed * 1000 * Math.max(0.15, Math.abs(to - from) / span);
+    state.pos = from;
+  };
+
+  const wake = () => {
+    if (raf || !alive) return;
+    window.clearTimeout(timer);
+    timer = 0;
+    last = performance.now();
+    raf = requestAnimationFrame(tick);
+  };
+
+  const tick = now => {
+    raf = 0;
+    if (!alive) return;
+    const dt = Math.min(0.05, Math.max(0, (now - last) / 1000));
+    last = now;
+
+    if (s.disabled) {
+      state.pos = null;
+      state.phase = 'idle';
+      draw();
+      return;
+    }
+
+    const following = s.followPointer && state.inside;
+    if (following) {
+      if (state.pos === null) state.pos = nearest();
+      const stiffness = 220;
+      state.vel += ((state.target - state.pos) * stiffness - state.vel * 2 * Math.sqrt(stiffness)) * dt;
+      state.pos += state.vel * dt;
+      state.phase = 'follow';
+      draw();
+      raf = requestAnimationFrame(tick);
+      return;
+    }
+
+    if (state.phase === 'follow') {
+      state.vel = 0;
+      sweep(state.pos ?? nearest(), nearest(), now);
+    }
+
+    if (state.phase === 'sweep') {
+      if (s.pauseOnHover && state.inside) {
+        state.start += dt * 1000;
+        raf = requestAnimationFrame(tick);
+        return;
+      }
+      const t = Math.min(1, Math.max(0, (now - state.start) / state.duration));
+      state.pos = state.from + (state.to - state.from) * s.ease(t);
+      draw();
+      if (t < 1) {
+        raf = requestAnimationFrame(tick);
+        return;
+      }
+      if (s.trigger !== 'loop' || reduce) {
+        state.phase = 'idle';
+        state.pos = null;
+        draw();
+        return;
+      }
+      state.phase = 'wait';
+      state.resume = now + s.delay * 1000;
+    }
+
+    if (state.phase === 'wait') {
+      if (now < state.resume) {
+        window.clearTimeout(timer);
+        timer = window.setTimeout(wake, Math.max(16, state.resume - now));
+        return;
+      }
+      if (s.yoyo) {
+        state.flip = !state.flip;
+        sweep(state.flip ? exit() : entry(), state.flip ? entry() : exit(), now);
+      } else {
+        sweep(entry(), exit(), now);
+      }
+      raf = requestAnimationFrame(tick);
+      return;
+    }
+
+    if (state.phase === 'idle' && s.trigger === 'loop' && !reduce) {
+      state.flip = false;
+      sweep(entry(), exit(), now);
+      raf = requestAnimationFrame(tick);
+      return;
+    }
+  };
+
+  const locate = event => {
+    const rect = root.getBoundingClientRect();
+    const radians = (s.angle * Math.PI) / 180;
+    const dx = Math.sin(radians);
+    const dy = -Math.cos(radians);
+    const length = Math.abs(rect.width * dx) + Math.abs(rect.height * dy) || 1;
+    const along = (event.clientX - rect.left - rect.width / 2) * dx + (event.clientY - rect.top - rect.height / 2) * dy;
+    return 50 + (along / length) * 100;
+  };
+
+  const onEnter = event => {
+    state.inside = true;
+    state.target = locate(event);
+    if (s.disabled) return;
+    if (s.followPointer) {
+      if (state.pos === null) state.pos = nearest();
+    } else if (s.trigger === 'hover' && state.phase === 'idle' && !reduce) {
+      sweep(entry(), exit(), performance.now());
+    }
+    wake();
+  };
+
+  const onMove = event => {
+    state.target = locate(event);
+    if (s.followPointer) wake();
+  };
+
+  const onLeave = () => {
+    state.inside = false;
+    wake();
+  };
+
+  const observer = new IntersectionObserver(entries => {
+    const visible = entries.some(item => item.isIntersecting);
+    state.visible = visible;
+    if (!visible) return;
+    if (s.trigger === 'view' && !state.seen && !reduce && !s.disabled) {
+      state.seen = true;
+      sweep(entry(), exit(), performance.now());
+    }
+    wake();
+  });
+  observer.observe(root);
+
+  root.addEventListener('pointerenter', onEnter);
+  root.addEventListener('pointermove', onMove);
+  root.addEventListener('pointerleave', onLeave);
+
+  draw();
+  wake();
+
+  shinyInstances.push({
+    root,
+    glowRef,
+    syncText: () => {
+      if (glowRef) {
+        const raw = Array.from(root.childNodes)
+          .filter(n => n !== glowRef)
+          .map(n => n.textContent)
+          .join('');
+        glowRef.textContent = raw;
+      }
+      draw();
+      wake();
+    }
+  });
+}
+
+function updateShinyText() {
+  shinyInstances.forEach(inst => {
+    inst.syncText();
+  });
+}

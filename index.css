@@ -370,6 +370,34 @@ h1, h2, h3, h4, h5, h6,
   font-style: italic;
 }
 
+/* ==========================================================================
+   REACT BITS: SHINY TEXT COMPONENT (DYNAMIC LIGHT SWEEP)
+   ========================================================================== */
+.shiny-text {
+  position: relative;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: opacity 0.3s ease;
+  user-select: text;
+}
+
+.shiny-text__glow {
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: blur(0.14em);
+  pointer-events: none;
+  user-select: none;
+}
+
 /* REACT BITS: ROTATING TEXT */
 .rotating-text-banner {
   display: flex;
