@@ -489,8 +489,11 @@ const TRANSLATIONS = {
     vel_sub2: 'GENUINE BILL & BRAND WARRANTY',
     vel_sub3: 'LOWEST LOCAL PRICES IN YEOLA',
     orbit_tag: 'Original Spare Parts',
-    orbit_title: 'Verified Original Computer & Mobile Parts',
+    orbit_title: 'Tested Genuine Computer & Mobile Parts',
     orbit_desc: 'We use only 100% genuine screens, ultra-fast NVMe SSDs, batteries, graphics cards, and cooling systems with official brand warranties.',
+    orbit_core_badge: '100% TESTED & GUARANTEED',
+    orbit_core_title: 'Quality Parts & Accessories',
+    orbit_core_desc: 'Tap any part to see details',
     part_badge_1: '100% OEM Displays',
     part_cat_1: 'Mobile & Laptop Screens',
     part_title_1: '5G OLED Displays & Touch Glass',
@@ -667,8 +670,11 @@ const TRANSLATIONS = {
     vel_sub2: 'पक्के जीएसटी बिल व वॉरंटी',
     vel_sub3: 'येवल्यात सर्वात माफक भाव',
     orbit_tag: 'ओरिजिनल सुटे भाग',
-    orbit_title: '१००% खात्रीशीर कॉम्प्युटर व मोबाईल पार्ट्स',
+    orbit_title: 'तपासलेले ओरिजिनल कॉम्प्युटर व मोबाईल पार्ट्स',
     orbit_desc: 'आम्ही फक्त १००% ओरिजिनल डिस्प्ले, जलद SSD, बॅटरी, ग्राफिक्स कार्ड आणि कुलिंग सिस्टीम वापरतो - पक्क्या वॉरंटीसह.',
+    orbit_core_badge: '१००% ओरिजिनल व टेस्टिंग केलेले',
+    orbit_core_title: 'उत्तम पार्ट्स व ॲक्सेसरीज',
+    orbit_core_desc: 'माहिती पाहण्यासाठी कोणत्याही पार्टवर टॅप करा',
     part_badge_1: '१००% ओरिजिनल डिस्प्ले',
     part_cat_1: 'मोबाईल व लॅपटॉप स्क्रीन',
     part_title_1: '5G OLED स्क्रीन आणि टच ग्लास',
@@ -844,8 +850,11 @@ const TRANSLATIONS = {
     vel_sub2: 'जीएसटी बिल और कंपनी वारंटी',
     vel_sub3: 'येवला में सबसे कम दाम',
     orbit_tag: 'ओरिजिनल स्पेयर पार्ट्स',
-    orbit_title: 'वेरिफाइड ओरिजिनल कंप्यूटर और मोबाइल पार्ट्स',
+    orbit_title: 'टेस्टेड ओरिजिनल कंप्यूटर व मोबाइल पार्ट्स',
     orbit_desc: 'हम केवल १००% ओरिजिनल स्क्रीन, तेज़ NVMe SSD, बैटरी, ग्राफिक्स कार्ड और कूलिंग सिस्टम इस्तेमाल करते हैं - पक्की वारंटी के साथ।',
+    orbit_core_badge: '१००% टेस्टेड व ओरिजिनल',
+    orbit_core_title: 'बेहतरीन पार्ट्स व एक्सेसरीज',
+    orbit_core_desc: 'जानकारी के लिए किसी भी पार्ट पर टैप करें',
     part_badge_1: '१००% ओरिजिनल OEM डिस्प्ले',
     part_cat_1: 'मोबाइल और लैपटॉप स्क्रीन',
     part_title_1: '5G OLED डिस्प्ले और टच ग्लास',
@@ -1710,9 +1719,9 @@ function initOrbitImages() {
     const ry = Math.min(cy * (isMobile ? 0.54 : 0.62), 135);
 
     if (!isDragging) {
-      // Natural orbit speed + velocity decay
-      const normalSpeed = 0.00045;
-      const effectiveSpeed = isHovered ? normalSpeed * 0.25 : normalSpeed;
+      // Automatic smooth orbit rotation - tuned fast, graceful, and lively
+      const normalSpeed = 0.0042;
+      const effectiveSpeed = isHovered ? normalSpeed * 0.30 : normalSpeed;
       progress += effectiveSpeed + velocity;
       velocity *= 0.92; // smooth inertia friction
     }
