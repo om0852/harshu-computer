@@ -1171,6 +1171,106 @@ h1, h2, h3, h4, h5, h6,
 }
 
 /* ==========================================================================
+   PHYSICAL STORE & HAPPY CUSTOMERS SHOWCASE
+   ========================================================================== */
+.store-gallery-section {
+  padding: 100px 0 60px;
+  position: relative;
+  z-index: 20;
+  border-top: 1px solid var(--border-subtle);
+  background: #090909;
+}
+
+.store-photos-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.store-photo-card {
+  background: rgba(18, 18, 18, 0.88);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: 20px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(212, 175, 55, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: transform 0.3s var(--ease-spring), border-color 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.store-photo-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold-border);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 35px rgba(212, 175, 55, 0.2);
+}
+
+.store-photo-media {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: #000;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.store-photo-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 25%;
+  transition: transform 0.6s var(--ease-spring);
+  display: block;
+}
+
+.store-photo-card:hover .store-photo-media img {
+  transform: scale(1.04);
+}
+
+.store-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 5px 14px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--gold-border);
+  color: var(--gold-light);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+  z-index: 2;
+}
+
+.store-photo-caption {
+  padding: 20px 8px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.store-photo-caption h4 {
+  font-family: var(--font-serif);
+  font-size: 19px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.store-photo-caption p {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+/* ==========================================================================
    STORE LOCATION & GOOGLE MAPS
    ========================================================================== */
 .contact-section {
@@ -1695,6 +1795,38 @@ h1, h2, h3, h4, h5, h6,
     text-align: center;
     padding: 11px 16px;
     font-size: 13px;
+  }
+
+  /* Store Gallery on Mobile */
+  .store-gallery-section {
+    padding: 50px 0 30px;
+  }
+
+  .store-photos-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .store-photo-card {
+    padding: 14px;
+    border-radius: 18px;
+  }
+
+  .store-photo-media {
+    height: 220px;
+    border-radius: 14px;
+  }
+
+  .store-photo-caption {
+    padding: 14px 4px 4px;
+  }
+
+  .store-photo-caption h4 {
+    font-size: 16px;
+  }
+
+  .store-photo-caption p {
+    font-size: 12.5px;
   }
 
   /* Contact on Mobile */
