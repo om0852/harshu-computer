@@ -25,6 +25,7 @@ let idleTimer = null;
 
 document.addEventListener('DOMContentLoaded', () => {
   initLanguage();
+  initNavScrollSpy();
   initSwarmCursor();
   initRotatingText();
   initScrollReveal();
@@ -454,7 +455,8 @@ const TRANSLATIONS = {
   en: {
     meta_title: 'Harshu Computers & Electronics | Best Mobiles, Laptops & Repairs - Yeola',
     brand_name: 'Harshu Computers & Electronics',
-    nav_overview: 'Overview',
+    nav_info: 'Information',
+    nav_overview: 'Information',
     nav_studio: '3D View',
     nav_components: 'Parts',
     nav_inventory: 'Products',
@@ -581,6 +583,7 @@ const TRANSLATIONS = {
   mr: {
     meta_title: 'हर्षू कॉम्प्युटर्स आणि इलेक्ट्रॉनिक्स | मोबाईल्स, लॅपटॉप्स आणि जलद रिपेअर - येवला',
     brand_name: 'हर्षू कॉम्प्युटर्स अँड इलेक्ट्रॉनिक्स',
+    nav_info: 'माहिती',
     nav_overview: 'माहिती',
     nav_studio: '3D मॉडेल',
     nav_components: 'सुटे भाग',
@@ -708,6 +711,7 @@ const TRANSLATIONS = {
   hi: {
     meta_title: 'हर्षू कंप्यूटर्स एंड इलेक्ट्रॉनिक्स | सबसे बढ़िया मोबाइल, लैपटॉप और रिपेयरिंग - येवला',
     brand_name: 'हर्षू कंप्यूटर्स एंड इलेक्ट्रॉनिक्स',
+    nav_info: 'जानकारी',
     nav_overview: 'जानकारी',
     nav_studio: '3D व्यू',
     nav_components: 'स्पेयर पार्ट्स',
@@ -941,6 +945,40 @@ function initLanguage() {
       }
     } catch (e) {}
   });
+}
+
+/**
+ * Sync active class on the 3 header menu items (Information, Products, Location)
+ */
+function initNavScrollSpy() {
+  const navLinks = document.querySelectorAll('.nav-links .nav-item a');
+  const sections = ['hero', 'catalog', 'contact']
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
+
+  function onScroll() {
+    const scrollPos = window.scrollY + 220;
+    let currentId = 'hero';
+
+    sections.forEach(sec => {
+      if (sec.offsetTop <= scrollPos) {
+        currentId = sec.id;
+      }
+    });
+
+    navLinks.forEach(link => {
+      const parent = link.closest('.nav-item');
+      if (!parent) return;
+      if (link.getAttribute('href') === `#${currentId}`) {
+        parent.classList.add('active');
+      } else {
+        parent.classList.remove('active');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 }
 
 /* ==========================================================================
