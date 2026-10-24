@@ -3200,10 +3200,19 @@ function setupShinyTextInstance(root) {
     timer = 0;
     last = performance.now();
     raf = requestAnimationFrame(tick);
+    timer = window.setTimeout(() => {
+      if (raf) {
+        cancelAnimationFrame(raf);
+        raf = 0;
+        tick(performance.now());
+      }
+    }, 40);
   };
 
   const tick = now => {
     raf = 0;
+    window.clearTimeout(timer);
+    timer = 0;
     if (!alive) return;
     const dt = Math.min(0.05, Math.max(0, (now - last) / 1000));
     last = now;
@@ -3327,12 +3336,19 @@ function setupShinyTextInstance(root) {
   root.addEventListener('pointermove', onMove);
   root.addEventListener('pointerleave', onLeave);
 
+  if (s.trigger === 'loop' && !reduce) {
+    sweep(entry(), exit(), performance.now());
+  }
   draw();
   wake();
 
   shinyInstances.push({
     root,
     glowRef,
+    state,
+    s,
+    draw,
+    wake,
     syncText: () => {
       if (glowRef) {
         const raw = Array.from(root.childNodes)
@@ -3345,6 +3361,7 @@ function setupShinyTextInstance(root) {
       wake();
     }
   });
+  window.shinyInstances = shinyInstances;
 }
 
 function updateShinyText() {
