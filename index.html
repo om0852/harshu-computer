@@ -634,7 +634,69 @@
         <p class="section-desc" data-i18n="gallery_desc">See inside our Yeola shop. Welcoming thousands of happy customers with 100% genuine products, live testing, and expert computer technicians.</p>
       </div>
 
-      <div class="store-photos-grid">
+      <!-- React Bits ScrollExpand Component -->
+      <div class="scroll-expand" id="store-scroll-expand">
+        <div class="scroll-expand__track" id="store-expand-track">
+          <div class="scroll-expand__stage" id="store-expand-stage">
+            <div class="scroll-expand__frame" id="store-expand-frame">
+              <img class="scroll-expand__media" id="store-expand-media" src="assets/images/store-1.png" alt="Harshu Computers Store Front Counter in Yeola" draggable="false" />
+              <div class="scroll-expand__scrim" id="store-expand-scrim"></div>
+              
+              <!-- Content that fades in once frame reaches full bleed -->
+              <div class="scroll-expand__overlay" id="store-expand-overlay">
+                <div class="expand-overlay-card">
+                  <span class="hero-pill-badge" style="margin-bottom: 12px;">
+                    <span class="live-dot"></span>
+                    <span data-i18n="expand_badge">📍 Real Store in Yeola • Open All 7 Days</span>
+                  </span>
+                  <h3 class="expand-overlay-title" data-i18n="expand_heading">See Inside Harshu Computers</h3>
+                  <p class="expand-overlay-desc" data-i18n="expand_desc">
+                    Experience face-to-face friendly local service on Manmad Road near Samarth Mobile. Every device is unboxed, tested live in front of you, and backed by genuine brand warranties with tax invoices.
+                  </p>
+                  
+                  <div class="expand-highlights">
+                    <div class="expand-highlight-item">
+                      <span class="highlight-bullet">✦</span>
+                      <span data-i18n="expand_h1">30-Min Fast Repairs &amp; SSD Upgrades</span>
+                    </div>
+                    <div class="expand-highlight-item">
+                      <span class="highlight-bullet">✦</span>
+                      <span data-i18n="expand_h2">100% Genuine Brands with GST Invoices</span>
+                    </div>
+                    <div class="expand-highlight-item">
+                      <span class="highlight-bullet">✦</span>
+                      <span data-i18n="expand_h3">Trusted by 5,000+ Locals in Yeola</span>
+                    </div>
+                  </div>
+
+                  <div class="expand-actions">
+                    <a href="https://maps.google.com/?q=20.046299,74.4825491" target="_blank" class="btn-gold cursor-target" data-cursor-label="Maps">
+                      <span data-i18n="expand_btn_maps">Navigate on Google Maps</span>
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                    <a href="https://wa.me/919999999999?text=Hello%20Harshu%20Computers,%20I%20want%20to%20visit%20your%20shop" target="_blank" class="btn-outline-white cursor-target" data-cursor-label="Chat">
+                      <span data-i18n="expand_btn_chat">Chat with Shop Owner</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Resting title held over frame that lifts away on scroll -->
+            <div class="scroll-expand__title" id="store-expand-title" data-i18n="expand_title">
+              Our Yeola Flagship Store
+            </div>
+
+            <!-- Small cue under resting frame that fades on scroll -->
+            <div class="scroll-expand__hint" id="store-expand-hint" data-i18n="expand_hint">
+              Scroll down to explore store view ↓
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Store Customer & Counter Showcase Cards Below -->
+      <div class="store-photos-grid" style="margin-top: 50px;">
         <!-- Photo 1: Store Inside / Service Counter -->
         <div class="store-photo-card cursor-target" data-cursor-label="Store View">
           <div class="store-photo-media">

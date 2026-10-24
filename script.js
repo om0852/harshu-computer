@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
   init3DWorld();
   initOrbitImages();
   initScrollStack();
+  initScrollExpand();
 });
 
 /* ==========================================================================
@@ -598,6 +599,16 @@ const TRANSLATIONS = {
     gallery_tag: 'Our Physical Store',
     gallery_title: 'Real Store, Real People, Trusted Service',
     gallery_desc: 'See inside our Yeola shop. Welcoming thousands of happy customers with 100% genuine products, live testing, and expert computer technicians.',
+    expand_title: 'Our Yeola Flagship Store',
+    expand_hint: 'Scroll down to explore store view ↓',
+    expand_badge: '📍 Real Store in Yeola • Open All 7 Days',
+    expand_heading: 'See Inside Harshu Computers',
+    expand_desc: 'Experience face-to-face friendly local service on Manmad Road near Samarth Mobile. Every device is unboxed, tested live in front of you, and backed by genuine brand warranties with tax invoices.',
+    expand_h1: '30-Min Fast Repairs & SSD Upgrades',
+    expand_h2: '100% Genuine Brands with GST Invoices',
+    expand_h3: 'Trusted by 5,000+ Locals in Yeola',
+    expand_btn_maps: 'Navigate on Google Maps',
+    expand_btn_chat: 'Chat with Shop Owner',
     store_badge_1: '📍 Sales & Service Desk',
     store_cap_title_1: 'Dedicated Sales & Repair Counter',
     store_cap_desc_1: 'Walk in for immediate 30-minute laptop upgrades, SSD replacements, and mobile screen repairs with face-to-face service.',
@@ -765,6 +776,16 @@ const TRANSLATIONS = {
     gallery_tag: 'प्रत्यक्ष दुकान',
     gallery_title: 'येवला शहरातील आपले विश्वासू दुकान व समाधानी ग्राहक',
     gallery_desc: 'हर्षू कॉम्प्युटर्सचे प्रत्यक्ष दुकान आणि हजारो समाधानी ग्राहकांचा विश्वास. १००% ओरिजिनल सामान, समोरासमोर काम आणि पक्के बिल.',
+    expand_title: 'हर्षू कॉम्प्युटर्सचे प्रत्यक्ष दुकान',
+    expand_hint: 'दुकान आतून पाहण्यासाठी खाली स्क्रोल करा ↓',
+    expand_badge: '📍 येवल्यातील प्रत्यक्ष दुकान • सातही दिवस चालू',
+    expand_heading: 'हर्षू कॉम्प्युटर्सचे सुसज्ज दुकान',
+    expand_desc: 'समर्थ मोबाईल शेजारी, मनमाड रोडवर आपल्या हक्काचे विश्वासू दुकान. प्रत्येक फोन, लॅपटॉप आपल्या डोळ्यांसमोर चालू करून टेस्टिंग केले जाते आणि अधिकृत जीएसटी बिल मिळते.',
+    expand_h1: '३० मिनिटांत फास्ट रिपेअर व SSD अपग्रेड',
+    expand_h2: '१००% ओरिजिनल ब्रँड्स व जीएसटी बिल',
+    expand_h3: 'येवल्यातील ५,०००+ ग्राहकांचा अतूट विश्वास',
+    expand_btn_maps: 'गुगल मॅप्सवर पत्ता पहा',
+    expand_btn_chat: 'दुकानदारांशी व्हॉट्सॲपवर बोला',
     store_badge_1: '📍 सर्व्हिस व सेल्स काउंटर',
     store_cap_title_1: 'सुसज्ज सर्व्हिस व विक्री काउंटर',
     store_cap_desc_1: '३० मिनिटांत लॅपटॉप स्पीड अपग्रेड, नवीन SSD बसवणे आणि मोबाईल दुरुस्तीसाठी त्वरित समोरासमोर सर्व्हिस.',
@@ -932,6 +953,16 @@ const TRANSLATIONS = {
     gallery_tag: 'दुकान की झलक',
     gallery_title: 'येवला में अपनी भरोसेमंद दुकान और खुश ग्राहक',
     gallery_desc: 'हर्षू कंप्यूटर्स की असली दुकान और हजारों संतुष्ट ग्राहकों का भरोसा। १००% ओरिजिनल सामान, सामने काम और पक्का बिल।',
+    expand_title: 'हर्षू कंप्यूटर्स की असली दुकान',
+    expand_hint: 'दुकान को अंदर से देखने के लिए नीचे स्क्रॉल करें ↓',
+    expand_badge: '📍 येवला में असली दुकान • सातों दिन खुली',
+    expand_heading: 'हर्षू कंप्यूटर्स का सुसज्ज शोरूम',
+    expand_desc: 'समर्थ मोबाइल के पास, मनमाड रोड पर अपनी भरोसेमंद दुकान। हर फोन और लैपटॉप आपके सामने अनबॉक्स और टेस्ट करके दिया जाता है, साथ में पक्का जीएसटी बिल व कंपनी वारंटी।',
+    expand_h1: '३० मिनट में फास्ट रिपेयर व SSD अपग्रेड',
+    expand_h2: '१००% ओरिजिनल ब्रांड्स व पक्का जीएसटी बिल',
+    expand_h3: 'येवला के ५,०००+ खुश ग्राहकों का भरोसा',
+    expand_btn_maps: 'गूगल मैप्स पर रास्ता देखें',
+    expand_btn_chat: 'दुकानदार से व्हाट्सएप पर बात करें',
     store_badge_1: '📍 सर्विस और सेल्स काउंटर',
     store_cap_title_1: 'सेल्स एवं रिपेयर काउंटर',
     store_cap_desc_1: '३० मिनट में लैपटॉप स्पीड अपग्रेड, SSD लगवाना और मोबाइल रिपेयरिंग के लिए डायरेक्ट इन-स्टोर सर्विस।',
@@ -1377,6 +1408,164 @@ function filterCatalog(category, btn) {
       }
     }
   }
+}
+
+/* ==========================================================================
+   10. REACT BITS: SCROLL EXPAND COMPONENT (SHOP SHOWCASE)
+   ========================================================================== */
+function initScrollExpand() {
+  const expanders = document.querySelectorAll('.scroll-expand');
+  if (!expanders.length) return;
+
+  expanders.forEach(root => {
+    setupScrollExpandInstance(root);
+  });
+}
+
+function setupScrollExpandInstance(root) {
+  const track = root.querySelector('.scroll-expand__track');
+  const stage = root.querySelector('.scroll-expand__stage');
+  const frame = root.querySelector('.scroll-expand__frame');
+  const media = root.querySelector('.scroll-expand__media');
+  const title = root.querySelector('.scroll-expand__title');
+  const hint = root.querySelector('.scroll-expand__hint');
+  const overlay = root.querySelector('.scroll-expand__overlay');
+  const scrim = root.querySelector('.scroll-expand__scrim');
+
+  if (!track || !stage || !frame || !media) return;
+
+  const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
+  const smoothstep = (edge0, edge1, x) => {
+    const t = clamp((x - edge0) / (edge1 - edge0 || 1e-6), 0, 1);
+    return t * t * (3 - 2 * t);
+  };
+
+  const getProps = () => {
+    const isMobile = window.innerWidth < 768;
+    return {
+      startWidth: isMobile ? 86 : 44,
+      startHeight: isMobile ? 66 : 58,
+      startRadius: 24,
+      endRadius: 0,
+      mediaZoom: 1.35,
+      scrollDistance: 1.2,
+      holdDistance: 0.35,
+      smoothing: 0.1,
+      overlayScrim: 0.70,
+      useWindowScroll: true,
+      enabled: true
+    };
+  };
+
+  let props = getProps();
+
+  const applyProgress = (p) => {
+    const e = smoothstep(0, 1, p);
+
+    const w = props.startWidth + (100 - props.startWidth) * e;
+    const h = props.startHeight + (100 - props.startHeight) * e;
+    const ix = Math.max(0, (100 - w) / 2);
+    const iy = Math.max(0, (100 - h) / 2);
+    const r = props.startRadius + (props.endRadius - props.startRadius) * e;
+    frame.style.clipPath = `inset(${iy}% ${ix}% ${iy}% ${ix}% round ${r}px)`;
+
+    media.style.transform = `scale(${props.mediaZoom + (1 - props.mediaZoom) * e})`;
+
+    if (scrim) scrim.style.opacity = `${props.overlayScrim * e}`;
+
+    if (title) {
+      const out = smoothstep(0.4, 0.88, p);
+      title.style.opacity = `${1 - out}`;
+      title.style.transform = `translate3d(0, ${-28 * out}px, 0) scale(${1 + 0.06 * out})`;
+    }
+
+    if (hint) {
+      const gone = smoothstep(0, 0.12, p);
+      hint.style.opacity = `${1 - gone}`;
+      hint.style.transform = `translate3d(0, ${8 * gone}px, 0)`;
+    }
+
+    if (overlay) {
+      const inn = smoothstep(0.68, 1, p);
+      overlay.style.opacity = `${inn}`;
+      overlay.style.transform = `translate3d(0, ${18 * (1 - inn)}px, 0)`;
+      overlay.style.pointerEvents = inn > 0.85 ? 'auto' : 'none';
+    }
+  };
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let raf = 0;
+  let current = 0;
+  let target = 0;
+  let stageH = 0;
+  let running = false;
+
+  const measure = () => {
+    props = getProps();
+    stageH = props.useWindowScroll ? window.innerHeight : root.clientHeight;
+    if (stageH <= 0) return;
+    stage.style.height = `${stageH}px`;
+    track.style.height = `${stageH * (1 + Math.max(0, props.scrollDistance) + Math.max(0, props.holdDistance))}px`;
+
+    const w = root.clientWidth || stageH;
+    stage.style.setProperty('--se-title-size', `${clamp(w * 0.075, 20, 84)}px`);
+  };
+
+  const readProgress = () => {
+    if (!props.enabled) return 1;
+    const span = stageH * Math.max(0.01, props.scrollDistance);
+    if (props.useWindowScroll) {
+      const top = track.getBoundingClientRect().top;
+      return clamp(-top / span, 0, 1);
+    }
+    return clamp(root.scrollTop / span, 0, 1);
+  };
+
+  const tick = () => {
+    const k = props.smoothing <= 0 ? 1 : 1 - Math.exp(-1 / (60 * props.smoothing));
+    current += (target - current) * k;
+    if (Math.abs(target - current) < 0.0004) {
+      current = target;
+      running = false;
+    }
+    applyProgress(current);
+    raf = running ? requestAnimationFrame(tick) : 0;
+  };
+
+  const kick = () => {
+    if (running) return;
+    running = true;
+    if (!raf) raf = requestAnimationFrame(tick);
+  };
+
+  const onScroll = () => {
+    target = readProgress();
+    if (props.smoothing <= 0 || reduceMotion || document.hidden) {
+      current = target;
+      applyProgress(current);
+      return;
+    }
+    kick();
+  };
+
+  const onResize = () => {
+    measure();
+    target = readProgress();
+    current = target;
+    applyProgress(current);
+  };
+
+  measure();
+  target = readProgress();
+  current = target;
+  applyProgress(current);
+
+  const scroller = props.useWindowScroll ? window : root;
+  scroller.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onResize);
+  const ro = new ResizeObserver(onResize);
+  ro.observe(root);
 }
 
 const ORBIT_PARTS = {
