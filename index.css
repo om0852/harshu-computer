@@ -50,7 +50,7 @@ html {
   color: var(--text-primary);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  overflow-x: clip;
   max-width: 100%;
   width: 100%;
 }
@@ -59,7 +59,7 @@ body {
   background-color: var(--bg-deep);
   color: var(--text-primary);
   font-family: var(--font-sans);
-  overflow-x: hidden;
+  overflow-x: clip;
   max-width: 100%;
   width: 100%;
   position: relative;
@@ -728,15 +728,22 @@ h1, h2, h3, h4, h5, h6,
 }
 
 /* ==========================================================================
-   REACT BITS: ORBIT IMAGES (SMALL HARDWARE COMPONENTS ECOSYSTEM)
+   REACT BITS: SCROLL STACK (ORIGINAL SPARE PARTS & HARDWARE)
    ========================================================================== */
+.spare-parts-section {
+  padding: 110px 0 60px;
+  position: relative;
+  z-index: 20;
+  border-top: 1px solid var(--border-subtle);
+  background: #080808;
+}
+
 .orbit-section {
   padding: 100px 0;
   position: relative;
   z-index: 20;
   border-top: 1px solid var(--border-subtle);
   background: #080808;
-  overflow: hidden;
 }
 
 .orbit-images-wrapper {

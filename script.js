@@ -488,11 +488,50 @@ const TRANSLATIONS = {
     vel_sub2: 'GENUINE BILL & BRAND WARRANTY',
     vel_sub3: 'LOWEST LOCAL PRICES IN YEOLA',
     orbit_tag: 'Original Spare Parts',
-    orbit_title: 'Tested Genuine Computer & Mobile Parts',
-    orbit_desc: 'We use only 100% original screens, fast SSD storage, RAM, batteries, and cooling fans to ensure your devices last long without trouble.',
-    orbit_core_badge: '100% TESTED & GUARANTEED',
-    orbit_core_title: 'Quality Parts & Accessories',
-    orbit_core_desc: 'Tap any part to see details',
+    orbit_title: 'Verified Original Computer & Mobile Parts',
+    orbit_desc: 'We use only 100% genuine screens, ultra-fast NVMe SSDs, batteries, graphics cards, and cooling systems with official brand warranties.',
+    part_badge_1: '100% OEM Displays',
+    part_cat_1: 'Mobile & Laptop Screens',
+    part_title_1: '5G OLED Displays & Touch Glass',
+    part_s1_1: 'Original OLED & IPS panels for iPhone 16/15, Samsung, Vivo, Oppo, OnePlus',
+    part_s1_2: 'Vibrant color accuracy, smooth 120Hz refresh rate & instant capacitive touch',
+    part_s1_3: 'Express 30-minute screen replacement done in-store with free tempered glass',
+    part_s1_4: '100% tested digitizer with 90-day comprehensive shop warranty',
+    part_price_1: '₹1,499 - ₹8,999',
+    part_badge_2: '10x Speed Guarantee',
+    part_cat_2: 'Memory & Storage Upgrades',
+    part_title_2: 'Crucial & Kingston NVMe SSDs & DDR4/DDR5 RAM',
+    part_s2_1: 'Ultra-fast Gen 3 & Gen 4 M.2 NVMe SSDs (256GB / 512GB / 1TB / 2TB)',
+    part_s2_2: 'Turns any slow laptop or PC into a rocket: boots Windows in under 5 seconds',
+    part_s2_3: '8GB / 16GB / 32GB high-frequency RAM for smooth multitasking & Tally',
+    part_s2_4: 'Free Windows 11 installation, full personal data transfer & 3 to 5 years brand warranty',
+    part_price_2: '₹1,850 - ₹9,500',
+    part_badge_3: 'NVIDIA GeForce & AMD',
+    part_cat_3: 'Gaming & Video Editing Hardware',
+    part_title_3: 'Dedicated GPUs & 80+ Bronze/Gold SMPS',
+    part_s3_1: 'NVIDIA RTX 4060 / 3060 / 3050 & AMD Radeon cards for GTA V, editing & 3D',
+    part_s3_2: 'Certified 550W / 650W / 750W 80-Plus Bronze & Gold power supply units',
+    part_s3_3: 'Surge-protected clean current delivery protects motherboard from voltage spikes',
+    part_s3_4: 'Official manufacturer tax bill with 3-Year direct service center warranty',
+    part_price_3: '₹4,800 - ₹38,500',
+    part_badge_4: 'Grade-A Safe Cells',
+    part_cat_4: 'Power & Backup Systems',
+    part_title_4: 'Original Laptop Batteries & 65W/100W PD Chargers',
+    part_s4_1: '100% genuine backup batteries for HP, Dell, Lenovo, ASUS, Acer & Apple MacBook',
+    part_s4_2: 'True 4-6 hours battery life with zero battery swelling or overheating risk',
+    part_s4_3: 'Original 45W, 65W & 100W Type-C laptop chargers with heavy copper cords',
+    part_s4_4: '1-Year direct store replacement warranty with instant testing',
+    part_price_4: '₹1,299 - ₹4,200',
+    part_badge_5: 'Arctic MX-4 Thermal Paste',
+    part_cat_5: 'Thermal Servicing & Protection',
+    part_title_5: 'CPU Heatsink Fans & Thermal Care',
+    part_s5_1: 'Original silent cooling fans for all laptop models & desktop RGB cabinets',
+    part_s5_2: 'Premium Arctic MX-4 paste drops laptop temperatures by 15°C to 20°C',
+    part_s5_3: 'Completely fixes loud fan noise, sudden hanging and unexpected shutdowns',
+    part_s5_4: '30-Minute fast deep cleaning and servicing right in front of you',
+    part_price_5: '₹299 - ₹1,499',
+    btn_inquire_part: 'Inquire on WhatsApp',
+    btn_book_cooling: 'Book Thermal Service',
     catalog_tag: 'Store Products',
     catalog_title: 'Browse Mobiles, Laptops & Services',
     catalog_desc: 'Clear transparent pricing with official bill and shop guarantee.',
@@ -617,11 +656,50 @@ const TRANSLATIONS = {
     vel_sub2: 'पक्के जीएसटी बिल व वॉरंटी',
     vel_sub3: 'येवल्यात सर्वात माफक भाव',
     orbit_tag: 'ओरिजिनल सुटे भाग',
-    orbit_title: '१००% ओरिजिनल कॉम्प्युटर व मोबाईल पार्ट्स',
-    orbit_desc: 'आम्ही फक्त ओरिजिनल डिस्प्ले, जलद SSD, रॅम आणि बॅटरी वापरतो, ज्यामुळे तुमचा फोन व लॅपटॉप अनेक वर्षे सुरळीत चालतो.',
-    orbit_core_badge: '१००% टेस्टेड व गॅरंटीड',
-    orbit_core_title: 'उत्कृष्ट पार्ट्स व ॲक्सेसरीज',
-    orbit_core_desc: 'तपशील पाहण्यासाठी कोणत्याही भागावर क्लिक करा',
+    orbit_title: '१००% खात्रीशीर कॉम्प्युटर व मोबाईल पार्ट्स',
+    orbit_desc: 'आम्ही फक्त १००% ओरिजिनल डिस्प्ले, जलद SSD, बॅटरी, ग्राफिक्स कार्ड आणि कुलिंग सिस्टीम वापरतो - पक्क्या वॉरंटीसह.',
+    part_badge_1: '१००% ओरिजिनल डिस्प्ले',
+    part_cat_1: 'मोबाईल व लॅपटॉप स्क्रीन',
+    part_title_1: '5G OLED स्क्रीन आणि टच ग्लास',
+    part_s1_1: 'iPhone 16/15, Samsung, Vivo, Oppo, OnePlus साठी अस्सल OLED व IPS डिस्प्ले',
+    part_s1_2: 'उत्तम रंग, स्मूथ 120Hz रिफ्रेश रेट आणि तत्काळ टच रिस्पॉन्स',
+    part_s1_3: '३० मिनिटांत दुकानात समोर स्क्रीन बदलून दिली जाते, सोबत टेम्पर्ड ग्लास फ्री',
+    part_s1_4: 'पूर्ण टेस्टेड स्क्रीन आणि ९० दिवसांची खात्रीशीर वॉरंटी',
+    part_price_1: '₹१,४९९ - ₹८,९९९',
+    part_badge_2: '१० पट जास्त स्पीडची गॅरंटी',
+    part_cat_2: 'मेमरी व स्टोरेज अपग्रेड',
+    part_title_2: 'Crucial व Kingston NVMe SSD आणि RAM',
+    part_s2_1: 'सुपरफास्ट M.2 NVMe SSD (256GB / 512GB / 1TB / 2TB)',
+    part_s2_2: 'कोणताही जुना लॅपटॉप ५ सेकंदात चालू होतो, सुपरफास्ट स्पीड',
+    part_s2_3: 'Tally व ऑफिससाठी 8GB / 16GB / 32GB हाय-स्पीड रॅम',
+    part_s2_4: 'मोफत Windows 11, तुमचा संपूर्ण डेटा सुरक्षित आणि ३ ते ५ वर्षे वॉरंटी',
+    part_price_2: '₹१,८५० - ₹९,५००',
+    part_badge_3: 'NVIDIA GeForce आणि AMD',
+    part_cat_3: 'गेमिंग व व्हिडिओ एडिटिंग हार्डवेअर',
+    part_title_3: 'डेडिकेटेड ग्राफिक्स कार्ड्स आणि SMPS पॉवर',
+    part_s3_1: 'NVIDIA RTX 4060, 3060 व AMD Radeon ग्राफिक्स कार्ड्स',
+    part_s3_2: '80+ Bronze व Gold प्रमाणित पॉवर सप्लाय (550W - 750W)',
+    part_s3_3: 'विजेच्या झटक्यांपासून मदरबोर्डचे १००% संरक्षण',
+    part_s3_4: 'कंपनीचे जीएसटी बिल आणि ३ वर्षांची अधिकृत वॉरंटी',
+    part_price_3: '₹४,८०० - ₹३८,५००',
+    part_badge_4: 'सुरक्षित ओरिजिनल सेल्स',
+    part_cat_4: 'बॅटरी व चार्जर सिस्टीम',
+    part_title_4: 'ओरिजिनल लॅपटॉप बॅटरी आणि PD फास्ट चार्जर',
+    part_s4_1: 'HP, Dell, Lenovo, ASUS, Acer व Apple MacBook साठी १००% ओरिजिनल बॅटरी',
+    part_s4_2: '४ ते ६ तास बॅटरी बॅकअप, कोणतीही बॅटरी फुगण्याची भीती नाही',
+    part_s4_3: 'ओरिजिनल 45W, 65W आणि 100W Type-C फास्ट चार्जर',
+    part_s4_4: '१ वर्षाची थेट दुकान रिप्लेसमेंट वॉरंटी',
+    part_price_4: '₹१,२९९ - ₹४,२००',
+    part_badge_5: 'Arctic MX-4 थर्मल पेस्ट',
+    part_cat_5: 'थर्मल सर्व्हिसिंग व कुलिंग',
+    part_title_5: 'CPU फॅन आणि कुलिंग सर्व्हिस',
+    part_s5_1: 'सर्व लॅपटॉप्स आणि डेस्कटॉप कॅबिनेटसाठी सायलेंट कुलिंग फॅन',
+    part_s5_2: 'Arctic MX-4 थर्मल पेस्टमुळे लॅपटॉप १५°C ते २०°C थंड चालतो',
+    part_s5_3: 'फॅनचा मोठा आवाज, लॅपटॉप गरम होणे व अचानक बंद पडणे पूर्णपणे बंद',
+    part_s5_4: '३० मिनिटांत समोर क्लीनिंग आणि फास्ट फॅन रिप्लेसमेंट',
+    part_price_5: '₹२९९ - ₹१,४९९',
+    btn_inquire_part: 'व्हॉट्सॲपवर माहिती विचारा',
+    btn_book_cooling: 'थर्मल सर्व्हिस बुक करा',
     catalog_tag: 'दुकानातील प्रॉडक्ट्स',
     catalog_title: 'मोबाईल्स, लॅपटॉप्स आणि सर्व्हिसेस',
     catalog_desc: 'पक्क्या बिलासह व खात्रीशीर दुकानाच्या गॅरंटीसह योग्य किमती.',
@@ -745,11 +823,50 @@ const TRANSLATIONS = {
     vel_sub2: 'जीएसटी बिल और कंपनी वारंटी',
     vel_sub3: 'येवला में सबसे कम दाम',
     orbit_tag: 'ओरिजिनल स्पेयर पार्ट्स',
-    orbit_title: 'जांचे हुए ओरिजिनल कंप्यूटर और मोबाइल पार्ट्स',
-    orbit_desc: 'हम केवल १००% ओरिजिनल डिस्प्ले, तेज़ SSD, रैम और बैटरी लगाते हैं ताकि आपका डिवाइस सालों-साल बिना परेशानी चले।',
-    orbit_core_badge: '१००% टेस्टेड और गारंटीड',
-    orbit_core_title: 'क्वालिटी पार्ट्स और एक्सेसरीज',
-    orbit_core_desc: 'जानकारी देखने के लिए किसी भी पार्ट पर क्लिक करें',
+    orbit_title: 'वेरिफाइड ओरिजिनल कंप्यूटर और मोबाइल पार्ट्स',
+    orbit_desc: 'हम केवल १००% ओरिजिनल स्क्रीन, तेज़ NVMe SSD, बैटरी, ग्राफिक्स कार्ड और कूलिंग सिस्टम इस्तेमाल करते हैं - पक्की वारंटी के साथ।',
+    part_badge_1: '१००% ओरिजिनल OEM डिस्प्ले',
+    part_cat_1: 'मोबाइल और लैपटॉप स्क्रीन',
+    part_title_1: '5G OLED डिस्प्ले और टच ग्लास',
+    part_s1_1: 'iPhone 16/15, Samsung, Vivo, Oppo, OnePlus के लिए असली OLED और IPS डिस्प्ले',
+    part_s1_2: 'असली कलर्स, स्मूथ 120Hz रिफ्रेश रेट और तुरंत टच रिस्पॉन्स',
+    part_s1_3: '३० मिनट में दुकान पर सामने स्क्रीन चेंज, साथ में टेम्पर्ड ग्लास फ्री',
+    part_s1_4: 'पूरी तरह टेस्टेड स्क्रीन और ९० दिन की पक्की दुकान वारंटी',
+    part_price_1: '₹१,४९९ - ₹८,९९९',
+    part_badge_2: '१० गुना तेज़ स्पीड गारंटी',
+    part_cat_2: 'मेमोरी और स्टोरेज अपग्रेड',
+    part_title_2: 'Crucial और Kingston NVMe SSD और RAM',
+    part_s2_1: 'सुपरफास्ट Gen 3 व Gen 4 M.2 NVMe SSD (256GB / 512GB / 1TB / 2TB)',
+    part_s2_2: 'पुराना और धीमा लैपटॉप ५ सेकंड में ऑन हो जाता है, रॉकेट जैसी स्पीड',
+    part_s2_3: 'टैली और ऑफिस के लिए 8GB / 16GB / 32GB हाई-स्पीड रैम',
+    part_s2_4: 'फ्री Windows 11, पर्सनल डेटा पूरी तरह सुरक्षित और ३ से ५ साल की वारंटी',
+    part_price_2: '₹१,८५० - ₹९,५००',
+    part_badge_3: 'NVIDIA GeForce और AMD',
+    part_cat_3: 'गेमिंग और वीडियो एडिटिंग हार्डवेयर',
+    part_title_3: 'डेडिकेटेड ग्राफिक्स कार्ड और SMPS पावर',
+    part_s3_1: 'NVIDIA RTX 4060, 3060 व AMD Radeon ग्राफिक्स कार्ड्स',
+    part_s3_2: '80+ Bronze व Gold सर्टिफाइड पावर सप्लाई (550W - 750W)',
+    part_s3_3: 'वोल्टेज के उतार-चढ़ाव से मदरबोर्ड की १००% सुरक्षा',
+    part_s3_4: 'कंपनी का पक्का जीएसटी बिल और ३ साल की ऑफिशियल वारंटी',
+    part_price_3: '₹४,८०० - ₹३८,५००',
+    part_badge_4: 'सुरक्षित ओरिजिनल सेल्स',
+    part_cat_4: 'बैटरी और चार्जर सिस्टम',
+    part_title_4: 'ओरिजिनल लैपटॉप बैटरी और PD फास्ट चार्जर',
+    part_s4_1: 'HP, Dell, Lenovo, ASUS, Acer और Apple MacBook के लिए असली बैटरी',
+    part_s4_2: '४ से ६ घंटे तक की असली बैटरी लाइफ, बैटरी फूलने या गर्म होने का कोई खतरा नहीं',
+    part_s4_3: 'ओरिजिनल 45W, 65W और 100W Type-C फास्ट चार्जर',
+    part_s4_4: '१ साल की डायरेक्ट दुकान रिप्लेसमेंट गारंटी',
+    part_price_4: '₹१,२९९ - ₹४,२००',
+    part_badge_5: 'Arctic MX-4 थर्मल पेस्ट',
+    part_cat_5: 'थर्मल सर्विसिंग और कूलिंग',
+    part_title_5: 'CPU फैन और कूलिंग केयर',
+    part_s5_1: 'सभी लैपटॉप्स और डेस्कटॉप कैबिनेट के लिए साइलेंट कूलिंग फैन',
+    part_s5_2: 'Arctic MX-4 थर्मल पेस्ट लगाने से लैपटॉप का तापमान १५°C से २०°C कम हो जाता है',
+    part_s5_3: 'फैन की तेज़ आवाज़, लैपटॉप गर्म होना और अचानक बंद होना पूरी तरह ठीक',
+    part_s5_4: '३० मिनट में सामने क्लीनिंग और तुरंत फैन रिप्लेसमेंट',
+    part_price_5: '₹२९९ - ₹१,४९९',
+    btn_inquire_part: 'व्हाट्सएप पर जानकारी लें',
+    btn_book_cooling: 'थर्मल सर्विस बुक करें',
     catalog_tag: 'दुकान के प्रोडक्ट्स',
     catalog_title: 'मोबाइल, लैपटॉप और रिपेयरिंग सेवाएं',
     catalog_desc: 'पक्के बिल और दुकान की गारंटी के साथ एकदम सही दाम।',
@@ -1104,29 +1221,40 @@ function initScrollVelocity() {
 /* ==========================================================================
    8. REACT BITS: SCROLL STACK COMPONENT (CURATED INVENTORY)
    ========================================================================== */
+/* ==========================================================================
+   8. REACT BITS: SCROLL STACK COMPONENT
+   ========================================================================== */
 function initScrollStack() {
-  const root = document.getElementById('catalog-scroll-stack');
-  const inner = document.getElementById('scroll-stack-inner');
-  const end = document.getElementById('scroll-stack-end');
-  if (!root || !inner || !end) return;
+  const stacks = document.querySelectorAll('.scroll-stack');
+  if (!stacks.length) return;
 
-  const slots = Array.from(inner.querySelectorAll('[data-stack-slot]'));
+  stacks.forEach(root => {
+    setupScrollStackInstance(root);
+  });
+}
+
+function setupScrollStackInstance(root) {
+  const inner = root.querySelector('.scroll-stack__inner');
+  const end = root.querySelector('.scroll-stack__end');
+  if (!inner || !end) return;
+
+  const slots = Array.from(inner.querySelectorAll(':scope > [data-stack-slot]'));
   if (!slots.length) return;
 
   const getSettings = () => {
     const isMobile = window.innerWidth < 768;
     const isSmall = window.innerWidth < 480;
     return {
-      itemDistance: isSmall ? 150 : (isMobile ? 180 : 300),
-      itemStackDistance: isSmall ? 12 : (isMobile ? 16 : 28),
-      stackPosition: isSmall ? '64px' : (isMobile ? '72px' : '14%'),
-      itemScale: isMobile ? 0.025 : 0.045,
-      baseScale: isMobile ? 0.92 : 0.8,
+      itemDistance: isSmall ? 80 : (isMobile ? 100 : 130),
+      itemStackDistance: isSmall ? 14 : (isMobile ? 18 : 26),
+      stackPosition: isSmall ? '80px' : (isMobile ? '90px' : '15%'),
+      itemScale: isMobile ? 0.035 : 0.05,
+      baseScale: isMobile ? 0.88 : 0.80,
       dimAmount: 0.20,
-      blurAmount: isMobile ? 0.5 : 1.5,
-      tiltAmount: isMobile ? 0.8 : 2.5,
-      rotationAmount: isMobile ? 0.4 : 1.2,
-      holdDistance: isMobile ? 90 : 240,
+      blurAmount: isMobile ? 0 : 0.8,
+      tiltAmount: isMobile ? 1.0 : 2.5,
+      rotationAmount: isMobile ? 0.5 : 1.2,
+      holdDistance: isMobile ? 120 : 220,
       useWindowScroll: true
     };
   };
@@ -1140,7 +1268,7 @@ function initScrollStack() {
     return parseFloat(text) || 0;
   };
 
-  // Configure sticky positions, bottom margins, z-indexes, and spacing between slots
+  // 1. Layout slots with sticky tops, margins, z-indexes, and React Bits spacing gaps
   const layoutSlots = () => {
     settings = getSettings();
     slots.forEach((slot, index) => {
@@ -1150,7 +1278,7 @@ function initScrollStack() {
 
       if (index > 0) {
         const prev = slot.previousElementSibling;
-        const gap = Math.max(30, settings.itemDistance - (slots.length - index) * settings.itemStackDistance);
+        const gap = Math.max(20, settings.itemDistance - (slots.length - index) * settings.itemStackDistance);
         if (prev && prev.classList.contains('scroll-stack__spacer')) {
           prev.style.height = `${gap}px`;
         } else {
@@ -1209,7 +1337,7 @@ function initScrollStack() {
   };
 
   const schedule = () => {
-    if (!frame) frame = requestAnimationFrame(update);
+    update();
   };
 
   window.addEventListener('scroll', schedule, { passive: true });
