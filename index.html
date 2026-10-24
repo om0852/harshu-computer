@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="meta_title">Harshu Computers &amp; Electronics | Best Mobiles, Laptops &amp; Repairs - Yeola</title>
+  <meta name="description" content="Harshu Computers: Yeola's trusted shop for new &amp; second-hand Laptops, 5G Smartphones, PC Builds, Accessories &amp; Fast 30-Minute Repairs. Near Samarth Mobile, Erandgaon Road, Yeola. Rated 5.0 on Justdial.">
+  
+  <!-- Fonts: Inter (Primary) + Noto Sans Devanagari (Marathi/Hindi) + JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700;800&family=Syncopate:wght@700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="index.css">
+
+  <!-- Three.js + Loaders + Controls -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/DRACOLoader.js"></script>
+  <script src="https://unpkg.com/meshoptimizer@0.18.1/meshopt_decoder.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body class="swarm-cursor-active">
+
+  <!-- REACT BITS COMPONENT: SWARM CURSOR (800 PARTICLES, WEBGL2 FLUID SIMULATION) -->
+  <div id="swarm-cursor" class="swarm-cursor">
+    <canvas id="swarm-cursor-canvas" class="swarm-cursor-canvas" aria-hidden="true"></canvas>
+  </div>
+
+  <!-- Ambient Luxury Radial Spotlight -->
+  <div class="bg-ambient-layer"></div>
+
+  <!-- Giant Watermark Background Text -->
+  <div class="hero-watermark">HARSHU</div>
+
+  <!-- Floating Island Navigation Bar -->
+  <div class="header-wrapper">
+    <header class="floating-nav">
+      <a href="#hero" class="brand-badge cursor-target" data-cursor-label="Harshu">
+        <div class="brand-badge-icon">HC</div>
+        <span data-i18n="brand_name">Harshu Computers &amp; Electronics</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li class="nav-item active"><a href="#hero" class="cursor-target" data-i18n="nav_overview" data-cursor-label="View">Overview</a></li>
+          <li class="nav-item"><a href="#stage-device" class="cursor-target" data-i18n="nav_studio" data-cursor-label="3D Lab">3D View</a></li>
+          <li class="nav-item"><a href="#hardware-orbit" class="cursor-target" data-i18n="nav_components" data-cursor-label="Orbit">Parts</a></li>
+          <li class="nav-item"><a href="#catalog" class="cursor-target" data-i18n="nav_inventory" data-cursor-label="Shop">Products</a></li>
+          <li class="nav-item"><a href="#contact" class="cursor-target" data-i18n="nav_location" data-cursor-label="Visit">Location</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <!-- Language Switcher: English | मराठी | हिंदी -->
+        <div class="lang-switcher cursor-target" data-cursor-label="Language">
+          <button class="lang-btn active" id="btn-lang-en" onclick="setLanguage('en', true)">EN</button>
+          <button class="lang-btn" id="btn-lang-mr" onclick="setLanguage('mr', true)">मराठी</button>
+          <button class="lang-btn" id="btn-lang-hi" onclick="setLanguage('hi', true)">हिंदी</button>
+        </div>
+
+        <a href="https://wa.me/919999999999?text=Hello%20Harshu%20Computers,%20I%20want%20to%20order/inquire%20about%20a%20Phone,%20Laptop%20or%20PC" target="_blank" class="btn-header-cta cursor-target" data-cursor-label="WhatsApp">
+          <span data-i18n="btn_whatsapp">Order on WhatsApp</span>
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </header>
+  </div>
+
+  <!-- MAIN CONTAINER -->
+  <main class="main-wrapper">
+    
+    <!-- HERO SECTION WITH INTEGRATED DEDICATED 3D STAGE -->
+    <section class="hero-section" id="hero">
+      <div class="container hero-grid">
+        
+        <!-- Left: Headline, RotatingText, Value Prop -->
+        <div class="hero-content">
+          <div class="hero-pill-badge">
+            <span class="live-dot"></span>
+            <span data-i18n="hero_badge">⭐ 5.0 Star Rated Shop • Yeola, Maharashtra</span>
+          </div>
+
+          <h1 class="hero-title" data-i18n="hero_title">
+            Best Mobiles, Laptops &amp; Computer Repairs in Yeola
+          </h1>
+
+          <p class="hero-title-sub" data-i18n="hero_title_sub">
+            Guaranteed Best Local Prices • Genuine Brand Warranty • 100% Tested
+          </p>
+
+          <!-- REACT BITS: ROTATING TEXT COMPONENT -->
+          <div class="rotating-text-banner">
+            <span class="rotating-label" data-i18n="rotating_label">Available at Shop:</span>
+            <div class="rotating-text-box" id="rotating-text-box">
+              <span class="rotating-item current">iPhone &amp; 5G Mobiles</span>
+            </div>
+          </div>
+
+          <p class="hero-desc" data-i18n="hero_desc">
+            Welcome to Harshu Computers! Yeola's trusted shop for new &amp; second-hand laptops, smartphones, custom computers, and instant repairs near Samarth Mobile, Erandgaon Road.
+          </p>
+
+          <div class="hero-cta-group">
+            <a href="#catalog" class="btn-gold cursor-target" data-cursor-label="Catalog">
+              <span data-i18n="btn_explore_catalog">View Products &amp; Prices</span>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a href="https://wa.me/919999999999?text=Hello%20Harshu%20Computers,%20I%20have%20an%20inquiry" target="_blank" class="btn-outline-white cursor-target" data-cursor-label="Chat">
+              <span data-i18n="btn_whatsapp_inquiry">Chat on WhatsApp</span>
+            </a>
+          </div>
+
+          <!-- Quick Metrics Bento -->
+          <div class="hero-metrics">
+            <div class="metric-item cursor-target" data-cursor-label="Rating">
+              <span class="metric-val" data-i18n="metric_rating_val">5.0 ★</span>
+              <span class="metric-lbl" data-i18n="metric_rating_lbl">Justdial 5-Star Rating</span>
+            </div>
+            <div class="metric-item cursor-target" data-cursor-label="Warranty">
+              <span class="metric-val" data-i18n="metric_warranty_val">100%</span>
+              <span class="metric-lbl" data-i18n="metric_warranty_lbl">Genuine Brand Warranty</span>
+            </div>
+            <div class="metric-item cursor-target" data-cursor-label="Speed">
+              <span class="metric-val" data-i18n="metric_speed_val">30 Min</span>
+              <span class="metric-lbl" data-i18n="metric_speed_lbl">Fast Repair &amp; Upgrades</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Seamless Frameless 3D Device Studio Stage -->
+        <div class="hero-3d-stage cursor-target" id="stage-device" data-cursor-label="Rotate 360°">
+          <!-- Canvas Container (Completely Frameless & Floating) -->
+          <div class="stage-canvas-wrapper" id="stage-canvas-wrapper">
+            <canvas id="canvas3d"></canvas>
+          </div>
+
+          <!-- Minimal Floating Device Switcher Controls -->
+          <div class="device-switcher-toolbar">
+            <button class="switcher-btn active cursor-target" id="btn-phone" onclick="loadModel('phone')" data-cursor-label="Phone">
+              <span data-i18n="switcher_phone">📱 Mobile</span>
+            </button>
+            <button class="switcher-btn cursor-target" id="btn-macbook" onclick="loadModel('macbook')" data-cursor-label="MacBook">
+              <span data-i18n="switcher_laptop">💻 Laptop</span>
+            </button>
+            <button class="switcher-btn cursor-target" id="btn-rig" onclick="loadModel('rig')" data-cursor-label="Gaming PC">
+              <span data-i18n="switcher_pc">⚡ Desktop PC</span>
+            </button>
+            <button class="switcher-btn cursor-target" id="btn-reset" onclick="reset3DCamera()" data-cursor-label="Reset">
+              <span data-i18n="switcher_reset">↺ Reset</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- REACT BITS: SCROLL VELOCITY COMPONENT -->
+    <section class="scroll-velocity-section" id="velocity-strip">
+      <div class="velocity-row" id="velocity-row-1">
+        <div class="velocity-scroller">
+          <span data-i18n="vel_1">HARSHU COMPUTERS YEOLA</span>
+          <span class="gold-sep">✦</span>
+          <span data-i18n="vel_2">BEST MOBILES &amp; LAPTOPS</span>
+          <span class="gold-sep">✦</span>
+          <span data-i18n="vel_3">30-MINUTE FAST REPAIRS</span>
+          <span class="gold-sep">✦</span>
+          <span data-i18n="vel_4">ORIGINAL ACCESSORIES</span>
+          <span class="gold-sep">✦</span>
+          <span data-i18n="vel_5">JUSTDIAL 5.0 RATED</span>
+          <span class="gold-sep">✦</span>
+          <span data-i18n="vel_1">HARSHU COMPUTERS YEOLA</span>
+          <span class="gold-sep">✦</span>
+          <span data-i18n="vel_2">BEST MOBILES &amp; LAPTOPS</span>
+          <span class="gold-sep">✦</span>
+          <span data-i18n="vel_3">30-MINUTE FAST REPAIRS</span>
+          <span class="gold-sep">✦</span>
+        </div>
+      </div>
+      <div class="velocity-row reverse" id="velocity-row-2">
+        <div class="velocity-scroller">
+          <span class="outline-txt" data-i18n="vel_sub1">NEAR SAMARTH MOBILE • ERANDGAON ROAD</span>
+          <span class="gold-sep">✦</span>
+          <span data-i18n="vel_sub2">GENUINE BILL &amp; BRAND WARRANTY</span>
+          <span class="gold-sep">✦</span>
+          <span data-i18n="vel_sub3">LOWEST LOCAL PRICES IN YEOLA</span>
+          <span class="gold-sep">✦</span>
+          <span data-i18n="vel_sub1">NEAR SAMARTH MOBILE • ERANDGAON ROAD</span>
+          <span class="gold-sep">✦</span>
+          <span data-i18n="vel_sub2">GENUINE BILL &amp; BRAND WARRANTY</span>
+          <span class="gold-sep">✦</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- REACT BITS COMPONENT: ORBIT IMAGES (SMALL HARDWARE COMPONENTS) -->
+    <section class="orbit-section" id="hardware-orbit">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-tag" data-i18n="orbit_tag">Original Spare Parts</span>
+          <h2 class="section-title" data-i18n="orbit_title">Tested Genuine Computer &amp; Mobile Parts</h2>
+          <p class="section-desc" data-i18n="orbit_desc">We use only 100% original screens, fast SSD storage, RAM, batteries, and cooling fans to ensure your devices last long without trouble.</p>
+        </div>
+
+        <div class="orbit-images-wrapper cursor-target" id="orbit-images-wrapper" data-cursor-label="Spin Orbit">
+          <!-- SVG Orbit Path Line -->
+          <svg class="orbit-path-svg" viewBox="0 0 1000 460" preserveAspectRatio="xMidYMid meet">
+            <ellipse cx="500" cy="230" rx="440" ry="135" fill="none" stroke="rgba(212, 175, 55, 0.2)" stroke-width="1.5" stroke-dasharray="6 6" />
+          </svg>
+
+          <!-- Center Luxury Core -->
+          <div class="orbit-center-core">
+            <div class="core-radial-glow"></div>
+            <div class="core-badge" data-i18n="orbit_core_badge">100% TESTED &amp; GUARANTEED</div>
+            <h3 class="core-title" data-i18n="orbit_core_title">Quality Parts &amp; Accessories</h3>
+            <p class="core-desc" data-i18n="orbit_core_desc">Tap any part to see details</p>
+          </div>
+
+          <!-- Orbiting Small Component Image Items Container -->
+          <div class="orbit-stage" id="orbit-stage">
+            <!-- Dynamically populated via initOrbitImages() in script.js -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+  <!-- E-COMMERCE CATALOG (BLACK, WHITE & GOLD) -->
+  <section class="catalog-section" id="catalog">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-tag" data-i18n="catalog_tag">Store Products</span>
+        <h2 class="section-title" data-i18n="catalog_title">Browse Mobiles, Laptops &amp; Services</h2>
+        <p class="section-desc" data-i18n="catalog_desc">Clear transparent pricing with official bill and shop guarantee.</p>
+      </div>
+
+      <div class="catalog-category-filter">
+        <button class="filter-btn active" onclick="filterCatalog('all', this)" data-i18n="filter_all">All Products</button>
+        <button class="filter-btn" onclick="filterCatalog('smartphones', this)" data-i18n="filter_smartphones">📱 Mobiles</button>
+        <button class="filter-btn" onclick="filterCatalog('laptops', this)" data-i18n="filter_laptops">💻 Laptops</button>
+        <button class="filter-btn" onclick="filterCatalog('tablets', this)" data-i18n="filter_tablets">📟 Tablets</button>
+        <button class="filter-btn" onclick="filterCatalog('peripherals', this)" data-i18n="filter_peripherals">⌨️ Accessories</button>
+        <button class="filter-btn" onclick="filterCatalog('rigs', this)" data-i18n="filter_rigs">⚡ Desktop PCs</button>
+      </div>
+
+      <!-- REACT BITS: SCROLL STACK COMPONENT (CURATED INVENTORY) -->
+      <div class="scroll-stack scroll-stack--window" id="catalog-scroll-stack">
+        <div class="scroll-stack__inner" id="scroll-stack-inner">
+          
+          <!-- Card 1: Mobiles & Smartphones -->
+          <div data-stack-slot="" class="scroll-stack__slot" data-index="0" data-cat="smartphones">
+            <div class="scroll-stack-card cursor-target" data-cursor-label="Mobiles">
+              <div class="scroll-stack-card__content">
+                <div class="stack-card-media">
+                  <img src="assets/images/iphone.jpg" alt="Smartphones in Yeola">
+                  <span class="stack-badge" data-i18n="c1_badge">iPhone, Samsung, Vivo, Oppo</span>
+                </div>
+                <div class="stack-card-details">
+                  <div class="stack-card-header">
+                    <span class="stack-cat-tag" data-i18n="c1_cat">Brand New 5G Mobiles</span>
+                    <h3 class="stack-card-title" data-i18n="c1_title">iPhone &amp; Top 5G Android Phones</h3>
+                  </div>
+                  <ul class="stack-specs-list">
+                    <li><span class="bullet">✦</span> <span data-i18n="c1_s1">Available: iPhone 16/15, Samsung Galaxy, OnePlus, Vivo, Oppo, Realme</span></li>
+                    <li><span class="bullet">✦</span> <span data-i18n="c1_s2">All 5G models with fast charging &amp; crystal clear cameras</span></li>
+                    <li><span class="bullet">✦</span> <span data-i18n="c1_s3">Free tempered glass &amp; back cover with every new phone</span></li>
+                    <li><span class="bullet">✦</span> <span data-i18n="c1_s4">1-Year official brand warranty with GST bill</span></li>
+                  </ul>
+                  <div class="stack-card-footer">
+                    <div class="stack-price-box">
+                      <span class="price-lbl" data-i18n="c_price_from">Starting From</span>
+                      <span class="price-amount" data-i18n="c1_price">₹8,999 - ₹1,34,900</span>
+                    </div>
+                    <a href="https://wa.me/919999999999?text=Hello%20Harshu%20Computers,%20I%20am%20interested%20in%20Mobiles" target="_blank" class="btn-gold cursor-target" data-cursor-label="Order">
+                      <span data-i18n="btn_order_wa">Order on WhatsApp</span>
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <span class="scroll-stack-card__shade" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <!-- Card 2: Laptops & MacBooks -->
+          <div data-stack-slot="" class="scroll-stack__slot" data-index="1" data-cat="laptops">
+            <div class="scroll-stack-card cursor-target" data-cursor-label="Laptops">
+              <div class="scroll-stack-card__content">
+                <div class="stack-card-media">
+                  <img src="assets/images/macbook.jpg" alt="Laptops in Yeola">
+                  <span class="stack-badge" data-i18n="c2_badge">New &amp; Second Hand Laptops</span>
+                </div>
+                <div class="stack-card-details">
+                  <div class="stack-card-header">
+                    <span class="stack-cat-tag" data-i18n="c2_cat">Laptops for Study, Shop &amp; Office</span>
+                    <h3 class="stack-card-title" data-i18n="c2_title">HP, Dell, Lenovo &amp; Apple Laptops</h3>
+                  </div>
+                  <ul class="stack-specs-list">
+                    <li><span class="bullet">✦</span> <span data-i18n="c2_s1">Intel Core i3 / i5 / i7 and AMD Ryzen processors</span></li>
+                    <li><span class="bullet">✦</span> <span data-i18n="c2_s2">Fast SSD storage: Starts and shuts down in just 5 seconds</span></li>
+                    <li><span class="bullet">✦</span> <span data-i18n="c2_s3">Installed with Windows 11, MS Office, Antivirus &amp; Tally</span></li>
+                    <li><span class="bullet">✦</span> <span data-i18n="c2_s4">Tested second-hand laptops available at low budget with warranty</span></li>
+                  </ul>
+                  <div class="stack-card-footer">
+                    <div class="stack-price-box">
+                      <span class="price-lbl" data-i18n="c_price_from">Starting From</span>
+                      <span class="price-amount" data-i18n="c2_price">₹14,500 - ₹1,85,000</span>
+                    </div>
+                    <a href="https://wa.me/919999999999?text=Hello%20Harshu%20Computers,%20I%20want%20to%20inquire%20about%20Laptops" target="_blank" class="btn-gold cursor-target" data-cursor-label="Order">
+                      <span data-i18n="btn_order_wa">Order on WhatsApp</span>
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <span class="scroll-stack-card__shade" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <!-- Card 3: Tablets & iPads -->
+          <div data-stack-slot="" class="scroll-stack__slot" data-index="2" data-cat="tablets">
+            <div class="scroll-stack-card cursor-target" data-cursor-label="Tablets">
+              <div class="scroll-stack-card__content">
+                <div class="stack-card-media">
+                  <img src="assets/images/tablet.jpg" alt="Study and Business Tablets">
+                  <span class="stack-badge" data-i18n="c3_badge">Best for Online Study</span>
+                </div>
+                <div class="stack-card-details">
+                  <div class="stack-card-header">
+                    <span class="stack-cat-tag" data-i18n="c3_cat">Educational &amp; Business Tablets</span>
+                    <h3 class="stack-card-title" data-i18n="c3_title">iPads &amp; Android Study Tablets</h3>
+                  </div>
+                  <ul class="stack-specs-list">
+                    <li><span class="bullet">✦</span> <span data-i18n="c3_s1">Big crisp touch display for reading, school work &amp; YouTube</span></li>
+                    <li><span class="bullet">✦</span> <span data-i18n="c3_s2">Long-lasting battery keeps working all day on single charge</span></li>
+                    <li><span class="bullet">✦</span> <span data-i18n="c3_s3">Supports stylus pen for drawing, writing &amp; shop billing</span></li>
+                    <li><span class="bullet">✦</span> <span data-i18n="c3_s4">Original brand warranty &amp; pre-installed learning apps</span></li>
+                  </ul>
+                  <div class="stack-card-footer">
+                    <div class="stack-price-box">
+                      <span class="price-lbl" data-i18n="c_price_from">Starting From</span>
+                      <span class="price-amount" data-i18n="c3_price">₹11,999 - ₹89,900</span>
+                    </div>
+                    <a href="https://wa.me/919999999999?text=Hello%20Harshu%20Computers,%20I%20am%20interested%20in%20Tablets" target="_blank" class="btn-gold cursor-target" data-cursor-label="Order">
+                      <span data-i18n="btn_order_wa">Order on WhatsApp</span>
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <span class="scroll-stack-card__shade" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <!-- Card 4: Desktop PCs -->
+          <div data-stack-slot="" class="scroll-stack__slot" data-index="3" data-cat="rigs">
+            <div class="scroll-stack-card cursor-target" data-cursor-label="Desktop PCs">
+              <div class="scroll-stack-card__content">
+                <div class="stack-card-media">
+                  <img src="assets/images/hero_pc.jpg" alt="Computer Sets in Yeola">
+                  <span class="stack-badge" data-i18n="c4_badge">Ready-to-Use Full Set</span>
+                </div>
+                <div class="stack-card-details">
+                  <div class="stack-card-header">
+                    <span class="stack-cat-tag" data-i18n="c4_cat">Complete Computer Sets</span>
+                    <h3 class="stack-card-title" data-i18n="c4_title">Desktop PCs &amp; Office Computers</h3>
+                  </div>
+                  <ul class="stack-specs-list">
+                    <li><span class="bullet">✦</span> <span data-i18n="c4_s1">Full set includes LED monitor, CPU cabinet, keyboard &amp; mouse</span></li>
+                    <li><span class="bullet">✦</span> <span data-i18n="c4_s2">Perfect for GST billing, Tally, schools, offices &amp; cyber cafes</span></li>
+                    <li><span class="bullet">✦</span> <span data-i18n="c4_s3">Fast Intel Core processor with 8GB/16GB RAM &amp; 512GB SSD</span></li>
+                    <li><span class="bullet">✦</span> <span data-i18n="c4_s4">1-Year comprehensive shop warranty &amp; local Yeola service</span></li>
+                  </ul>
+                  <div class="stack-card-footer">
+                    <div class="stack-price-box">
+                      <span class="price-lbl" data-i18n="c_price_set">Complete Set From</span>
+                      <span class="price-amount" data-i18n="c4_price">₹16,500 - ₹95,000</span>
+                    </div>
+                    <a href="https://wa.me/919999999999?text=Hello%20Harshu%20Computers,%20I%20want%20a%20Desktop%20PC%20Set" target="_blank" class="btn-gold cursor-target" data-cursor-label="Order">
+                      <span data-i18n="btn_order_wa">Order on WhatsApp</span>
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <span class="scroll-stack-card__shade" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <!-- Card 5: Accessories -->
+          <div data-stack-slot="" class="scroll-stack__slot" data-index="4" data-cat="peripherals">
+            <div class="scroll-stack-card cursor-target" data-cursor-label="Accessories">
+              <div class="scroll-stack-card__content">
+                <div class="stack-card-media">
+                  <img src="assets/images/keyboard.jpg" alt="Computer Accessories in Yeola">
+                  <span class="stack-badge" data-i18n="c5_badge">100% Original Quality</span>
+                </div>
+                <div class="stack-card-details">
+                  <div class="stack-card-header">
+                    <span class="stack-cat-tag" data-i18n="c5_cat">Computer &amp; Mobile Accessories</span>
+                    <h3 class="stack-card-title" data-i18n="c5_title">Keyboards, Mouse, WiFi &amp; Cables</h3>
+                  </div>
+                  <ul class="stack-specs-list">
+                    <li><span class="bullet">✦</span> <span data-i18n="c5_s1">Wireless &amp; wired mouse, durable keyboards for daily typing</span></li>
+                    <li><span class="bullet">✦</span> <span data-i18n="c5_s2">HP, Canon, Epson printer ink bottles, cartridges &amp; cables</span></li>
+                    <li><span class="bullet">✦</span> <span data-i18n="c5_s3">Fast mobile chargers, power banks, pen drives &amp; OTG adapters</span></li>
+                    <li><span class="bullet">✦</span> <span data-i18n="c5_s4">Immediate replacement warranty on accessories</span></li>
+                  </ul>
+                  <div class="stack-card-footer">
+                    <div class="stack-price-box">
+                      <span class="price-lbl" data-i18n="c_price_from">Starting From</span>
+                      <span class="price-amount" data-i18n="c5_price">₹150 - ₹4,500</span>
+                    </div>
+                    <a href="https://wa.me/919999999999?text=Hello%20Harshu%20Computers,%20I%20need%20Accessories" target="_blank" class="btn-gold cursor-target" data-cursor-label="Order">
+                      <span data-i18n="btn_order_wa">Order on WhatsApp</span>
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <span class="scroll-stack-card__shade" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <!-- Card 6: 30-Minute Laptop Repair & Upgrade -->
+          <div data-stack-slot="" class="scroll-stack__slot" data-index="5" data-cat="laptops">
+            <div class="scroll-stack-card cursor-target" data-cursor-label="Repair Lab">
+              <div class="scroll-stack-card__content">
+                <div class="stack-card-media">
+                  <img src="assets/images/repair.jpg" alt="Laptop and Computer Repair in Yeola">
+                  <span class="stack-badge" data-i18n="c6_badge">30-Min Fast Repair</span>
+                </div>
+                <div class="stack-card-details">
+                  <div class="stack-card-header">
+                    <span class="stack-cat-tag" data-i18n="c6_cat">Quick Repair &amp; Speedup Lab</span>
+                    <h3 class="stack-card-title" data-i18n="c6_title">30-Minute Laptop &amp; PC Speed Upgrade</h3>
+                  </div>
+                  <ul class="stack-specs-list">
+                    <li><span class="bullet">✦</span> <span data-i18n="c6_s1">Make slow laptops 10x faster: Upgrade old hard disk to NVMe SSD</span></li>
+                    <li><span class="bullet">✦</span> <span data-i18n="c6_s2">Laptop screen change, battery replacement &amp; keyboard fixing</span></li>
+                    <li><span class="bullet">✦</span> <span data-i18n="c6_s3">Windows formatting, virus removal &amp; genuine software setup</span></li>
+                    <li><span class="bullet">✦</span> <span data-i18n="c6_s4">Your personal photos, files &amp; data are kept 100% safe</span></li>
+                  </ul>
+                  <div class="stack-card-footer">
+                    <div class="stack-price-box">
+                      <span class="price-lbl" data-i18n="c_price_service">Service Fee From</span>
+                      <span class="price-amount" data-i18n="c6_price">₹299 - ₹4,499</span>
+                    </div>
+                    <a href="https://wa.me/919999999999?text=Hello%20Harshu%20Computers,%20I%20want%20to%20repair%20my%20laptop/PC" target="_blank" class="btn-buy-wa cursor-target" data-cursor-label="Upgrade">
+                      <span data-i18n="btn_book_repair">Book Fast Repair</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <span class="scroll-stack-card__shade" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <!-- End Anchor for Stack Pinning -->
+          <div class="scroll-stack__end" id="scroll-stack-end" aria-hidden="true"></div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORE LOCATION & DIRECT CONTACT STAGE -->
+  <section class="contact-section" id="contact">
+    <div class="container">
+      <div class="contact-box">
+        <div>
+          <span class="section-tag" data-i18n="contact_tag">Direct Visit</span>
+          <h2 class="contact-title" data-i18n="contact_title">Visit Harshu Computers in Yeola</h2>
+          <p class="contact-desc" data-i18n="contact_desc">Conveniently located on Manmad Road near Samarth Mobile. Open all 7 days of the week from 9:00 AM to 9:00 PM. Call or visit anytime!</p>
+
+          <div class="info-cards">
+            <div class="info-row cursor-target" data-cursor-label="Location">
+              <div class="info-icon-badge">📍</div>
+              <div class="info-text">
+                <h5 data-i18n="info_address_title">Shop Address</h5>
+                <p data-i18n="info_address_text">Near Samarth Mobile, Manmad Road, Erandgaon Jeur, Yeola - 423401, Maharashtra</p>
+              </div>
+            </div>
+
+            <div class="info-row cursor-target" data-cursor-label="Timings">
+              <div class="info-icon-badge">⏰</div>
+              <div class="info-text">
+                <h5 data-i18n="info_hours_title">Shop Timings</h5>
+                <p data-i18n="info_hours_text">Monday to Sunday: 09:00 AM – 09:00 PM (Open All 7 Days)</p>
+              </div>
+            </div>
+
+            <div class="info-row cursor-target" data-cursor-label="Score">
+              <div class="info-icon-badge">⭐</div>
+              <div class="info-text">
+                <h5 data-i18n="info_rating_title">Justdial 5-Star Rated</h5>
+                <p data-i18n="info_rating_text">5.0 / 5.0 Star Rating on Justdial • Trusted Local Store</p>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+            <a href="https://maps.google.com/?q=20.046299,74.4825491" target="_blank" class="btn-gold cursor-target" data-cursor-label="Maps">
+              <span data-i18n="btn_maps">Open in Google Maps</span>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a href="https://wa.me/919999999999?text=Hello%20Harshu%20Computers,%20I%20want%20to%20visit%20your%20shop" target="_blank" class="btn-outline-white cursor-target" data-cursor-label="Chat">
+              <span data-i18n="btn_whatsapp_store">Chat on WhatsApp</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="map-wrapper cursor-target" data-cursor-label="Live Map">
+          <iframe 
+            title="Google Maps Location of Harshu Computers"
+            src="https://maps.google.com/maps?q=20.046299,74.4825491&hl=en&z=15&output=embed"
+            loading="lazy" 
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-copy" data-i18n="footer_copy">
+        © 2026 Harshu Computers &amp; Electronics. All rights reserved. • Erandgaon Jeur, Yeola, Maharashtra - 423401
+      </div>
+      <div class="footer-rating cursor-target" data-cursor-label="Verified">
+        <span data-i18n="footer_tag1">⭐ 5.0 Rating on Justdial</span>
+        <span>•</span>
+        <span data-i18n="footer_tag2">Open Today until 9:00 PM</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script for 3D GLTF Loading, OrbitControls, and Parallax Scroll -->
+  <script src="script.js"></script>
+</body>
+</html>
